@@ -1,0 +1,14 @@
+.Card {
+    margin: 5px 0 5px 0;
+    padding: 3px;
+    color: rgb(18, 94, 28);
+    border: 2px solid brown;
+}
+.OpenedCard {
+    display: flex;
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+    z-index: 500;
+    border: 1px solid black;
+}
