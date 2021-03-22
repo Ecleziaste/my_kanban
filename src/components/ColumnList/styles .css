@@ -1,0 +1,7 @@
+div {
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: grey;
+    margin: 0;
+    padding: 0;
+}
