@@ -1,42 +1,84 @@
-import React from 'react'
+import React, { useState } from "react";
 
-import './Column.css';
-
-
-const cards = [
-  {title: 'qweqwe', id: 1, author: 'Vasya', description: 'qweq253we', columnId: 1},
-  {title: 'qweqwe', id: 2, author: 'Vasya', description: 'qweq523we', columnId: 2},
-  {title: 'qweqwe', id: 3, author: 'Vasya', description: 'q2eq53we', columnId: 3},
-  {title: 'qweqwe', id: 4, author: 'Vasya', description: 'qweqwe', columnId: 4},
-  {title: 'qweqwe', id: 5, author: 'Vasya', description: 'qwe243qwe', columnId: 1},
-  {title: 'qweqwe', id: 6, author: 'Vasya', description: 'qwe23qwe', columnId: 2},
-  {title: 'qweqwe', id: 7, author: 'Vasya', description: 'q42weqwe', columnId: 3},
-  {title: 'qweqwe', id: 8, author: 'Vasya', description: 'qwe423qwe', columnId: 4},
-  {title: 'qweqwe', id: 9, author: 'Vasya', description: 'q234weq432we', columnId: 1},
-  {title: 'qweqwe', id: 10, author: 'Vasya', description: 'qw2eqwe', columnId: 2},
-  {title: 'qweqwe', id: 11, author: 'Vasya', description: 'qwe234qwe', columnId: 3},
-]
-
-// const filteredCards = cards.filter(card => card.columnId === columnId)
+import "./styles.css";
+import CardList from "../CardList";
+import ColumnInput from "../ColumnInput";
 
 type Props = {
-  title: string;
-  id: number
-}
+  columnTitle: string;
+  columnId: number;
+};
 
-const Column: React.FC<Props> = ({title, id}) =>  {
-  const addCard = () => {
+const Column: React.FC<Props> = ({ columnTitle, columnId }) => {
+  const [activeColumnInput, setActiveColumnInput] = useState(false);
+  // const [cards, setCards] = useState([
+  //   {
+  //     cardTitle: "заголовок",
+  //     cardId: 1,
+  //     author: "Vasya",
+  //     description: "qweq253we",
+  //     columnId: 1,
+  //   },
+  //   {
+  //     cardTitle: "qweqwe2",
+  //     cardId: 2,
+  //     author: "Vasya",
+  //     description: "qweq523we",
+  //     columnId: 2,
+  //   },
+  //   {
+  //     cardTitle: "qweqwe4",
+  //     cardId: 3,
+  //     author: "Vasya",
+  //     description: "qweqwe",
+  //     columnId: 4,
+  //   },
+  //   {
+  //     cardTitle: "qweqwe5",
+  //     cardId: 4,
+  //     author: "Vasya",
+  //     description: "qwe243qwe",
+  //     columnId: 1,
+  //   },
+  //   {
+  //     cardTitle: "qweqwe6",
+  //     cardId: 5,
+  //     author: "Vasya",
+  //     description: "qwe23qwe",
+  //     columnId: 2,
+  //   },
+  // ]);
+  // // Выносим сюда логику CardList
+  // const cardsByColumnId = cards.filter((card) => card.columnId === columnId);
 
-  }
-  
-  return(
-    <div className='Column'>
-      <div className='ColumnName'>{title}</div>
-      <div className='CardsList'>
-        {/* <CardList columnId={id}/> */}
+  const handleClick = (): void => {
+    setActiveColumnInput(true);
+  };
+  // const createCard = (card: { columnTitle: string; columnId: number }) => {
+  //   setCards([...cards, card]);
+  // };
+  return (
+    <div className="Column">
+      <div
+        className="ColumnName"
+        contentEditable={true}
+        suppressContentEditableWarning={true}
+        // FIXME: fast solution
+      >
+        {columnTitle}
       </div>
-      <button className='ColumnButton' onClick={addCard}>&#43;  Добавить Карточку</button>
-    </div>
-  )};
 
-  export default Column
+      <CardList columnId={columnId} />
+
+      {activeColumnInput ? (
+        <ColumnInput columnId={columnId} onClick={setActiveColumnInput} />
+      ) : (
+        <button className="ColumnButton" onClick={handleClick}>
+          &#43; Добавить Карточку
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default Column;

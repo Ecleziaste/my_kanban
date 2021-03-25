@@ -1,31 +1,28 @@
 .Column {
-    /* background-color: rgba(136, 18, 18, 0.932); */
-    background-color: rgba(245, 239, 239, 0.932);
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid rgb(5, 92, 92);
-    border-radius: 10px;
-    width: 20%;
-  }
-  .ColumnName {
-    /* width: 94%; */
-    font-size: 20px;
-    font-weight: 500;
-  }
-  .CardsList {
-    width: 90%;
-    list-style-type: none;
-    margin: 5px 5px 5px 0;
-    padding: 0;
-  }
-  .ColumnButton{
-    margin: 0;
-    background-color: rgb(122, 122, 247);
-    width: 90%;
-    /* display: flex;
-    justify-content: flex-start; */
-    text-align: left;
-  }
+  /* background-color: rgba(136, 18, 18, 0.932); */
+  background-color: rgba(245, 239, 239, 0.932);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid rgb(5, 92, 92);
+  border-radius: 10px;
+  width: 15%;
+}
+.ColumnName {
+  align-self: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+.CardList {
+  width: 96%;
+  margin: 5px;
+  padding: 0;
+}
+.ColumnButton {
+  margin: 5px;
+  width: 96%;
+  background-color: rgb(122, 122, 247);
+  text-align: left;
+}

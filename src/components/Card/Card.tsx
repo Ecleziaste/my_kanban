@@ -1,11 +1,20 @@
-import React from 'react'
-import './styles.css';
-// нужны ли css классы для спана и дива?
-const Card = () =>  (
-  <div className='Card'>
-    <span >Заголовок карточки</span>
-    <div>Число комментов</div>
-  </div> 
-  );
+import React from "react";
+import "./styles.css";
 
-export default Card
+type Props = {
+  cardTitle: string;
+  cardId: number;
+  // comments: number;
+};
+
+const Card: React.FC<Props> = ({ cardTitle }) => {
+  // const cardsById = cards.filter((card) => card.cardId === cardId);
+  return (
+    <div className="Card">
+      <span>{cardTitle}</span>
+      <div>Число комментов</div>
+    </div>
+  );
+};
+
+export default Card;
