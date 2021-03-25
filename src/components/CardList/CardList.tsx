@@ -3,6 +3,9 @@ import Card from "../Card";
 
 type Props = {
   columnId: number;
+  // cardTitle: string;
+  // cardId: number;
+  // onClick: (args: { cardTitle: string; cardId: number }) => void;
 };
 
 const CardList: React.FC<Props> = ({ columnId }) => {
@@ -11,7 +14,7 @@ const CardList: React.FC<Props> = ({ columnId }) => {
       cardTitle: "заголовок",
       cardId: 1,
       author: "Vasya",
-      description: "qweq253we",
+      description: "описание",
       columnId: 1,
     },
     {
@@ -29,31 +32,10 @@ const CardList: React.FC<Props> = ({ columnId }) => {
       columnId: 4,
     },
     {
-      cardTitle: "qweqwe5",
-      cardId: 4,
-      author: "Vasya",
-      description: "qwe243qwe",
-      columnId: 1,
-    },
-    {
       cardTitle: "qweqwe6",
       cardId: 5,
       author: "Vasya",
       description: "qwe23qwe",
-      columnId: 2,
-    },
-    {
-      cardTitle: "qweqwe8",
-      cardId: 6,
-      author: "Vasya",
-      description: "qwe423qwe",
-      columnId: 4,
-    },
-    {
-      cardTitle: "qweqwe10",
-      cardId: 7,
-      author: "Vasya",
-      description: "qw2eqwe",
       columnId: 2,
     },
     {
@@ -66,6 +48,7 @@ const CardList: React.FC<Props> = ({ columnId }) => {
   ]);
 
   const cardsByColumnId = cards.filter((card) => card.columnId === columnId);
+
   return (
     <div className="CardList">
       {cardsByColumnId.map((card) => {
