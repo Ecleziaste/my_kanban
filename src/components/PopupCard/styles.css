@@ -1,0 +1,8 @@
+.PopupCard {
+    display: flex;
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+    z-index: 500;
+    border: 1px solid black;
+}

@@ -2,40 +2,29 @@ import React, { useState } from "react";
 import "./styles.css";
 
 type Props = {
-  columnId: number;
   onClick: (arg: boolean) => void;
+  createCard: (arg: any) => void;
 };
 
-const ColumnInput: React.FC<Props> = ({ columnId, onClick = () => {} }) => {
-  // let cardTitle = setTitle();
-  const cardTitle = "Z";
-  function createCard(cardTitle: string) {
-    console.log(`Card created in column ${columnId} with title ${cardTitle}`);
-  }
-
+const ColumnInput: React.FC<Props> = ({
+  onClick,
+  createCard,
+}) => {
   const closeInput = () => {
     onClick(false);
   };
-  // let чтобы инпут работал
-  const [title, setTitle] = useState("Заголовок карточки");
+  const [title, setTitle] = useState("");
 
   return (
     <div className="ColumnInput">
       <input
         placeholder="Введите заголовок для карточки"
-        onChange={
-          (event) => {
+        onChange={(event) => {
           setTitle(event.target.value);
-          // cardTitle = event.target.value;
-          console.log(event.target.value);
         }}
       ></input>
-      <button className="InputAddBtn" onClick={() => createCard(cardTitle)}>
-        {/* раскомменить код ниже и реализовать его работу */}
-        {/* <button
-        className="InputAddBtn"
-        onClick={() => createCard({ columnId, cardTitle, cardId })}
-      > */}
+      {/* <button className="InputAddBtn" onClick={() => {}}> */}
+      <button className="InputAddBtn" onClick={() => createCard(title)}>
         Добавить
       </button>
       <button className="InputDelBtn" onClick={closeInput}>

@@ -2,18 +2,19 @@ import React from "react";
 import "./styles.css";
 
 type Props = {
-  cardTitle: string;
-  cardId: number;
-  // comments: number;
+  title: string;
+  id: number;
+  comments: number;
+  columnId: number;
+  openCard: (arg: any) => void;
 };
 
-const Card: React.FC<Props> = ({ cardTitle }) => {
-  // const cardsById = cards.filter((card) => card.cardId === cardId);
+const Card: React.FC<Props> = ({ title, id, comments, openCard }) => {
   return (
-    <div className="Card">
-      <span>{cardTitle}</span>
-      <div>Число комментов</div>
-    </div>
+    <button className="Card" onClick={() => openCard(title)}>
+      <span>{title}</span>
+      <div>Комментарии: {comments}</div>
+    </button>
   );
 };
 

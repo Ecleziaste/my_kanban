@@ -1,9 +1,0 @@
-.CardList {
-    display: flex;
-    flex-flow: column nowrap;
-    /* justify-content: flex-start;
-    align-items: flex-start; */
-    width: 100%;
-    margin: 5px;
-    padding: 0;
-  }

@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import "./styles.css";
 import Column from "../Column";
 
-type Props = {};
+type Props = {
+  user: string;
+  openCard: (arg: any) => void;
+};
 
-const ColumnList: React.FC<Props> = () => {
+const ColumnList: React.FC<Props> = ({ user, openCard }) => {
   const [columns, addColumn] = useState([
     { title: "TODO", columnId: 1 },
     { title: "In Progress", columnId: 2 },
@@ -12,25 +15,13 @@ const ColumnList: React.FC<Props> = () => {
     { title: "Done", columnId: 4 },
   ]);
 
-  // const handleClick = (): void => {
-  //   const value: number = columns.length;
-
-  //   addColumn((columns) => [
-  //     ...columns,
-  //     { title: "New Column", columnId: value + 1 },
-  //   ]);
-
-  //   console.log(value + 1);
-  // };
-
   return (
     <div className="ColumnList">
-      {/* <div className="AddColumn">
-        <input type="button" onClick={handleClick} value="Add Column" />
-      </div> */}
       {columns.map((column) => {
         return (
           <Column
+            openCard={openCard}
+            user={user}
             columnTitle={column.title}
             columnId={column.columnId}
             key={column.columnId}
