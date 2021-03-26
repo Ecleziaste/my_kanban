@@ -7,9 +7,10 @@ type Props = {
   comments: number;
   columnId: number;
   openCard: (arg: any) => void;
+  // closeCard: (arg: any) => void;
 };
 
-const Card: React.FC<Props> = ({ title, id, comments, openCard }) => {
+const Card: React.FC<Props> = ({ title, comments, openCard }) => {
   return (
     <button className="Card" onClick={() => openCard(title)}>
       <span>{title}</span>

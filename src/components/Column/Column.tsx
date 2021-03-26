@@ -23,46 +23,21 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
     setActiveColumnInput(value);
   };
 
+  // FIXME: мб сделать обычный массив и пушить в него?
   const [cards, addCard] = useState([
     {
-      title: "заголовоГ",
+      title: "единственная карточка в useState, без которой всё ломается",
       description: "описание",
       comments: 2,
       author: user,
       id: 1,
       columnId: 1,
-    },
-    {
-      title: "qweqwe2",
-      description: "qweq523we",
-      comments: 0,
-      author: user,
-      id: 2,
-      columnId: 2,
-    },
-    {
-      title: "qweqwe4",
-      description: "qweqwe",
-      comments: 1,
-      author: user,
-      id: 3,
-      columnId: 4,
+      columnTitle: columnTitle,
     },
   ]);
 
-  // const cardToAdd = {
-  //   // значение должно прийти из инпута
-  //   title: "добавляемая карточка",
-  //   // значение придет из активной карточки
-  //   description: "описание",
-  //   comments: 2,
-  //   author: user,
-  //   id: cards.length + 1,
-  //   columnId: columnId,
-  // };
-
   const createCard = (title: string): void => {
-    // console.log(`card added in column ${columnId}`);
+    console.log(`card added in column ${columnId}`);
     addCard([
       ...cards,
       {
@@ -72,6 +47,7 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
         author: user,
         id: cards.length + 1,
         columnId,
+        columnTitle: columnTitle,
       },
     ]);
   };
