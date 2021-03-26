@@ -1,33 +1,54 @@
-.PopupCard {
-  /* position: absolute; */
+.popup__wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+}
+.popup__card {
+  background-color: rgba(131, 120, 120, 0.95);
   display: flex;
   flex-flow: column nowrap;
   margin: 0 auto;
   width: 500px;
   height: 400px;
-  z-index: 500;
+  z-index: 501;
   border: 3px solid black;
-  border-radius: 4px;
+  border-radius: 10px;
 }
-.PopupHeader {
+.popup__header {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   margin: 5px;
 }
-.PopupTitle {
+.popup__title {
   align-self: center;
   margin: 5px;
 }
-.PopupCloseBtn {
-  /* display: block; */
+.popup__closeBtn {
+  display: block;
+  width: 35px;
+  height: 35px;
   margin: 5px;
+  border-radius: 4px;
 }
-.PopupBody {
+.popup__body {
   margin: 5px;
   padding: 5px;
 }
-.CardDeleteBtn {
+.popup__description {
+  margin: 5px;
+}
+.popup__cardDeleteBtn {
   display: flex;
   align-self: flex-end;
+  border-radius: 4px;
+  margin: 5px;
+  padding: 10px;
 }

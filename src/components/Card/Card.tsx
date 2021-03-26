@@ -12,7 +12,7 @@ type Props = {
 
 const Card: React.FC<Props> = ({ title, comments, openCard }) => {
   return (
-    <button className="Card" onClick={() => openCard(title)}>
+    <button className="card" onClick={() => openCard(title)}>
       <span>{title}</span>
       <div>Комментарии: {comments}</div>
     </button>

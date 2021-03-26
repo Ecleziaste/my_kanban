@@ -6,17 +6,14 @@ type Props = {
   createCard: (arg: any) => void;
 };
 
-const ColumnInput: React.FC<Props> = ({
-  onClick,
-  createCard,
-}) => {
+const ColumnInput: React.FC<Props> = ({ onClick, createCard }) => {
   const closeInput = () => {
     onClick(false);
   };
   const [title, setTitle] = useState("");
 
   return (
-    <div className="ColumnInput">
+    <div className="card__input">
       <input
         placeholder="Введите заголовок для карточки"
         onChange={(event) => {
@@ -24,10 +21,10 @@ const ColumnInput: React.FC<Props> = ({
         }}
       ></input>
       {/* <button className="InputAddBtn" onClick={() => {}}> */}
-      <button className="InputAddBtn" onClick={() => createCard(title)}>
+      <button className="input__add_btn" onClick={() => createCard(title)}>
         Добавить
       </button>
-      <button className="InputDelBtn" onClick={closeInput}>
+      <button className="input__del_btn" onClick={closeInput}>
         &#10006;
       </button>
     </div>

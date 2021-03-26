@@ -14,7 +14,7 @@ const App = () => {
     console.log(value);
   };
 
-  const closeCard = (value: any) => {
+  const closeCard = () => {
     setCard(null);
   };
 
@@ -30,7 +30,9 @@ const App = () => {
 
   return (
     <div className="App">
+      <button className="add__column">add new column</button>
       <ColumnList user={userName} openCard={openCard} />
+
       {card && <PopupCard card={card} closeCard={closeCard} />}
     </div>
   );

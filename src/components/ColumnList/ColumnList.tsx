@@ -16,7 +16,7 @@ const ColumnList: React.FC<Props> = ({ user, openCard }) => {
   ]);
 
   return (
-    <div className="ColumnList">
+    <div className="column__list">
       {columns.map((column) => {
         return (
           <Column

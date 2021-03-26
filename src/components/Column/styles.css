@@ -1,4 +1,4 @@
-.Column {
+.column {
   /* background-color: rgba(136, 18, 18, 0.932); */
   background-color: rgba(245, 239, 239, 0.932);
   display: flex;
@@ -10,17 +10,17 @@
   border-radius: 10px;
   width: 15%;
 }
-.ColumnName {
+.column__name {
   align-self: center;
   font-size: 20px;
   font-weight: 500;
 }
-.CardList {
+.card__list {
   width: 96%;
   margin: 5px;
   padding: 0;
 }
-.ColumnButton {
+.column__button {
   margin: 5px;
   width: 96%;
   background-color: rgb(122, 122, 247);

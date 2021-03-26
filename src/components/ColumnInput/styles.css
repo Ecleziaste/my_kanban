@@ -1,5 +1,9 @@
-.CardInput {
+.card__input {
   width: 96%;
   margin: 5px;
   padding: 0;
+}
+.input__add_btn {
+}
+.input__del_btn {
 }

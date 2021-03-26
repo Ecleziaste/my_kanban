@@ -34,10 +34,19 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
       columnId: 1,
       columnTitle: columnTitle,
     },
+    {
+      title: "2ая карточка ",
+      description: "описание",
+      comments: 2,
+      author: user,
+      id: 2,
+      columnId: 2,
+      columnTitle: columnTitle,
+    },
   ]);
 
   const createCard = (title: string): void => {
-    console.log(`card added in column ${columnId}`);
+    // console.log(`card added in column ${columnId}`);
     addCard([
       ...cards,
       {
@@ -55,9 +64,9 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
   const cardsByColumnId = cards.filter((card) => card.columnId === columnId);
 
   return (
-    <div className="Column">
+    <div className="column">
       <div
-        className="ColumnName"
+        className="column__name"
         contentEditable={true}
         suppressContentEditableWarning={true}
         // FIXME: fast solution
@@ -65,7 +74,7 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
         {columnTitle}
       </div>
 
-      <div className="CardList">
+      <div className="card__list">
         {cardsByColumnId.map((card) => {
           return (
             <Card
@@ -84,7 +93,7 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
       {activeColumnInput ? (
         <ColumnInput onClick={toggleInput} createCard={createCard} />
       ) : (
-        <button className="ColumnButton" onClick={handleClick}>
+        <button className="column__button" onClick={handleClick}>
           &#43; Добавить Карточку
         </button>
       )}
