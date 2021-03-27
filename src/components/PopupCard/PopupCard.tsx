@@ -11,7 +11,10 @@ type Props = {
   // columnId: number;
   // openCard: (arg: any) => void;
 };
+
 const PopupCard: React.FC<Props> = ({ card, closeCard }) => {
+// const commentsByCardId = comments.filter((comment) => comments.id === id);
+
   return (
     <div className="popup__wrapper">
       <div className="popup__card">

@@ -12,15 +12,19 @@ const ColumnInput: React.FC<Props> = ({ onClick, createCard }) => {
   };
   const [title, setTitle] = useState("");
 
+  // function handleChange(e: any) {
+  //   setTitle(e.target.value);
+  // }
+  // onChange={handleChange}
+
   return (
     <div className="card__input">
       <input
         placeholder="Введите заголовок для карточки"
-        onChange={(event) => {
-          setTitle(event.target.value);
+        onChange={(e) => {
+          setTitle(e.target.value);
         }}
       ></input>
-      {/* <button className="InputAddBtn" onClick={() => {}}> */}
       <button className="input__add_btn" onClick={() => createCard(title)}>
         Добавить
       </button>

@@ -13,6 +13,8 @@ type Props = {
   // comments: number;
 };
 
+const comments: number = 0;
+
 const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
   const [activeColumnInput, setActiveColumnInput] = useState(false);
   const handleClick = (): void => {
@@ -24,7 +26,7 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
   };
 
   // FIXME: мб сделать обычный массив и пушить в него?
-  const [cards, addCard] = useState([
+  const [cards, setCards] = useState([
     {
       title: "единственная карточка в useState, без которой всё ломается",
       description: "описание",
@@ -37,7 +39,7 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
     {
       title: "2ая карточка ",
       description: "описание",
-      comments: 2,
+      comments: 1 + (comments || 0),
       author: user,
       id: 2,
       columnId: 2,
@@ -46,13 +48,12 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
   ]);
 
   const createCard = (title: string): void => {
-    // console.log(`card added in column ${columnId}`);
-    addCard([
+    setCards([
       ...cards,
       {
         title,
         description: "описание",
-        comments: 1,
+        comments: 0 + (comments || 0),
         author: user,
         id: cards.length + 1,
         columnId,
