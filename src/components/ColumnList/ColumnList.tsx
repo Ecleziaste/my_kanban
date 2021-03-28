@@ -5,7 +5,6 @@ import PopupCard from "../PopupCard";
 
 type Props = {
   user: string;
-  // openCard: (arg: any) => void;
 };
 
 const ColumnList: React.FC<Props> = ({ user }) => {
@@ -60,6 +59,7 @@ const ColumnList: React.FC<Props> = ({ user }) => {
           />
         );
       })}
+      {/* создаем для них общий scope*/}
       {card && <PopupCard card={card} closeCard={closeCard} />}
     </div>
   );

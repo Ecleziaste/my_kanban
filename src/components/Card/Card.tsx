@@ -2,19 +2,18 @@ import React from "react";
 import "./styles.css";
 
 type Props = {
-  title: string;
-  id: number;
-  comments: number;
-  columnId: number;
   openCard: (arg: any) => void;
-  // closeCard: (arg: any) => void;
+  card: any;
+  // card: {} | null;
 };
 
-const Card: React.FC<Props> = ({ title, comments, openCard }) => {
+// TODO: допрокидывать сюда остальные данные для попапа
+const Card: React.FC<Props> = ({ openCard, card }) => {
   return (
-    <button className="card" onClick={() => openCard(title)}>
-      <span>{title}</span>
-      <div>Комментарии: {comments}</div>
+    // TODO: РАЗОБРАТСЬЯ С ТЕМ, КАК ПРОКИДЫВАЕТСЯ title
+    <button className="card" onClick={() => openCard(card)}>
+      <span>{card.title}</span>
+      <div>Комментарии: {card.comments.length - 1}</div>
     </button>
   );
 };

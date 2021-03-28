@@ -39,26 +39,13 @@
   border-radius: 4px;
 }
 .popup__body {
-  display: flex;
-  flex-flow: column nowrap;
   margin: 5px;
   padding: 5px;
 }
 .popup__description {
-  width: 90%;
   margin: 5px;
 }
-.popup__description_input {
-  width: 100%;
-}
-hr {
-  margin: 10px 0;
-}
-.popup__comment_input {
-  width: 80%;
-  margin: 5px;
-}
-.popup__comment_input .popup__cardDeleteBtn {
+.popup__cardDeleteBtn {
   display: flex;
   align-self: flex-end;
   border-radius: 4px;

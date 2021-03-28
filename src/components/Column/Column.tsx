@@ -13,24 +13,24 @@ type Props = {
   // comments: number;
 };
 
-const comments: number = 0;
-
 const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
   const [activeColumnInput, setActiveColumnInput] = useState(false);
   const handleClick = (): void => {
     setActiveColumnInput(true);
   };
 
-  const toggleInput = (value: boolean) => {
+  const toggleInput = (value: boolean): void => {
     setActiveColumnInput(value);
   };
+
+  // useEffect(() => {}, []);
 
   // FIXME: мб сделать обычный массив и пушить в него?
   const [cards, setCards] = useState([
     {
-      title: "единственная карточка в useState, без которой всё ломается",
-      description: "описание",
-      comments: 2,
+      title: "1ая карточка(без единой карточки в useState всё ломается)",
+      description: "... описание ...",
+      comments: ["0"],
       author: user,
       id: 1,
       columnId: 1,
@@ -38,8 +38,8 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
     },
     {
       title: "2ая карточка ",
-      description: "описание",
-      comments: 1 + (comments || 0),
+      description: "... описание ...",
+      comments: ["0"],
       author: user,
       id: 2,
       columnId: 2,
@@ -52,8 +52,8 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
       ...cards,
       {
         title,
-        description: "описание",
-        comments: 0 + (comments || 0),
+        description: "... описание ...",
+        comments: ["0"],
         author: user,
         id: cards.length + 1,
         columnId,
@@ -77,24 +77,21 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
 
       <div className="card__list">
         {cardsByColumnId.map((card) => {
-          return (
-            <Card
-              // setIsOpenedCard={setIsOpenedCard}
-              openCard={openCard}
-              key={card.id + 1}
-              title={card.title}
-              comments={card.comments}
-              id={card.id}
-              columnId={card.columnId}
-            />
-          );
+          return <Card card={card} openCard={openCard} key={card.id + 1} />;
         })}
       </div>
-      {/* <CardList columnId={columnId} /> */}
       {activeColumnInput ? (
-        <ColumnInput onClick={toggleInput} createCard={createCard} />
+        <ColumnInput
+          // onClick={toggleInput}
+          createCard={createCard}
+          toggleInput={toggleInput}
+        />
       ) : (
-        <button className="column__button" onClick={handleClick}>
+        <button
+          className="column__button"
+          onClick={handleClick}
+          // почему здесь не работает toggleInput(true)?
+        >
           &#43; Добавить Карточку
         </button>
       )}
