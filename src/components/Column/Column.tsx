@@ -7,13 +7,20 @@ import Card from "../Card";
 type Props = {
   columnTitle: string;
   columnId: number;
-  openCard: (arg: any) => void;
   user: string;
+  openCard: (arg: any) => void;
+  // changeColumnTitle: (arg: any) => void;
 
   // comments: number;
 };
 
-const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
+const Column: React.FC<Props> = ({
+  columnTitle,
+  columnId,
+  user,
+  openCard,
+  // changeColumnTitle,
+}) => {
   const [activeColumnInput, setActiveColumnInput] = useState(false);
   const handleClick = (): void => {
     setActiveColumnInput(true);
@@ -34,19 +41,10 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
       author: user,
       id: 1,
       columnId: 1,
-      columnTitle: columnTitle,
-    },
-    {
-      title: "2ая карточка ",
-      description: "... описание ...",
-      comments: ["0"],
-      author: user,
-      id: 2,
-      columnId: 2,
-      columnTitle: columnTitle,
+      columnTitle,
     },
   ]);
-
+  // создать новую карточку
   const createCard = (title: string): void => {
     setCards([
       ...cards,
@@ -57,9 +55,20 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
         author: user,
         id: cards.length + 1,
         columnId,
-        columnTitle: columnTitle,
+        columnTitle,
       },
     ]);
+  };
+  // удалить карточку
+  const deleteCard = (id: number): void => {
+    setCards(cards.filter((card) => card.id === card.id));
+    console.log(id);
+  };
+
+  // изменить имя колонки
+  const [title, setColumnTitle] = useState(columnTitle);
+  const changeColumnTitle = (value: string): void => {
+    setColumnTitle(value);
   };
 
   const cardsByColumnId = cards.filter((card) => card.columnId === columnId);
@@ -70,9 +79,12 @@ const Column: React.FC<Props> = ({ columnTitle, columnId, user, openCard }) => {
         className="column__name"
         contentEditable={true}
         suppressContentEditableWarning={true}
+        onChange={(e) =>
+          changeColumnTitle((e.target as HTMLTextAreaElement).value)
+        }
         // FIXME: fast solution
       >
-        {columnTitle}
+        {title}
       </div>
 
       <div className="card__list">

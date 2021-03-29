@@ -14,6 +14,12 @@ const ColumnList: React.FC<Props> = ({ user }) => {
     { title: "Testing", columnId: 3 },
     { title: "Done", columnId: 4 },
   ]);
+
+  // const [title, setColumnTitle] = useState(columnTitle);
+  // const changeColumnTitle = (value: string): void => {
+  //   setColumnTitle(value);
+  // };
+
   // добавить колонку
   const handleClick = (): void => {
     addColumn((columns) => [
@@ -50,7 +56,6 @@ const ColumnList: React.FC<Props> = ({ user }) => {
       {columns.map((column) => {
         return (
           <Column
-            // comments={comments}
             openCard={openCard}
             user={user}
             columnTitle={column.title}
@@ -60,7 +65,9 @@ const ColumnList: React.FC<Props> = ({ user }) => {
         );
       })}
       {/* создаем для них общий scope*/}
-      {card && <PopupCard card={card} closeCard={closeCard} />}
+      {card && (
+        <PopupCard card={card} deleteCard={closeCard} closeCard={closeCard} />
+      )}
     </div>
   );
 };

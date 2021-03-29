@@ -6,9 +6,10 @@ type Props = {
   card: any;
   // card: {} | null;
   closeCard: (arg: any) => void;
+  deleteCard: (arg: any) => void;
 };
 
-const PopupCard: React.FC<Props> = ({ card, closeCard }) => {
+const PopupCard: React.FC<Props> = ({ card, closeCard, deleteCard }) => {
   // const commentsByCardId = comments.filter((comment) => comments.id === id);
 
   return (
@@ -21,15 +22,18 @@ const PopupCard: React.FC<Props> = ({ card, closeCard }) => {
             suppressContentEditableWarning={true}
             // FIXME: нужно менять значение в конкретной карточке
           >
-            {card.title} из колонки {card.columnTitle}
+            {card.title} created by {card.author} from column {card.columnTitle}
           </div>
-          <button className="popup__closeBtn" onClick={() => closeCard(null)}>
+          <button
+            className="popup__closeCardBtn"
+            onClick={() => closeCard(null)}
+          >
             X
           </button>
         </div>
         <div className="popup__body">
           <div className="popup__description">
-            <h4>Описание:</h4>
+            <h4>Description:</h4>
             <div>{card.description}</div>
             <input
               className="popup__description_input"
@@ -47,7 +51,12 @@ const PopupCard: React.FC<Props> = ({ card, closeCard }) => {
           })} */}
           <Comments />
         </div>
-        <button className="popup__cardDeleteBtn">delete dis card</button>
+        <button
+          className="popup__cardDeleteBtn"
+          onClick={() => deleteCard(card.id)}
+        >
+          delete dis card
+        </button>
       </div>
     </div>
   );
