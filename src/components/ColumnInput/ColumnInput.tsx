@@ -3,11 +3,18 @@ import "./styles.css";
 
 type Props = {
   // onClick: (arg: boolean) => void;
-  createCard: (arg: any) => void;
+  columnTitle: string;
+  columnId: number;
+  createCard: (title: string, columnId: number, columnTitle: string) => void;
   toggleInput: (arg: boolean) => void;
 };
 
-const ColumnInput: React.FC<Props> = ({ createCard, toggleInput }) => {
+const ColumnInput: React.FC<Props> = ({
+  createCard,
+  toggleInput,
+  columnTitle,
+  columnId,
+}) => {
   const closeInput = () => {
     toggleInput(false);
   };
@@ -27,7 +34,7 @@ const ColumnInput: React.FC<Props> = ({ createCard, toggleInput }) => {
       <button
         className="input__add_btn"
         onClick={() => {
-          createCard(title);
+          createCard(title, columnId, columnTitle);
           toggleInput(false);
         }}
       >

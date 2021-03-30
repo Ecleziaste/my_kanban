@@ -8,7 +8,9 @@ type Props = {
   columnTitle: string;
   columnId: number;
   user: string;
+  cards: Array<any>;
   openCard: (arg: any) => void;
+  createCard: (title: string, columnId: number, columnTitle: string) => void;
   // changeColumnTitle: (arg: any) => void;
 
   // comments: number;
@@ -18,7 +20,9 @@ const Column: React.FC<Props> = ({
   columnTitle,
   columnId,
   user,
+  cards,
   openCard,
+  createCard,
   // changeColumnTitle,
 }) => {
   const [activeColumnInput, setActiveColumnInput] = useState(false);
@@ -31,39 +35,6 @@ const Column: React.FC<Props> = ({
   };
 
   // useEffect(() => {}, []);
-
-  // FIXME: мб сделать обычный массив и пушить в него?
-  const [cards, setCards] = useState([
-    {
-      title: "1ая карточка(без единой карточки в useState всё ломается)",
-      description: "... описание ...",
-      comments: ["0"],
-      author: user,
-      id: 1,
-      columnId: 1,
-      columnTitle,
-    },
-  ]);
-  // создать новую карточку
-  const createCard = (title: string): void => {
-    setCards([
-      ...cards,
-      {
-        title,
-        description: "... описание ...",
-        comments: ["0"],
-        author: user,
-        id: cards.length + 1,
-        columnId,
-        columnTitle,
-      },
-    ]);
-  };
-  // удалить карточку
-  const deleteCard = (id: number): void => {
-    setCards(cards.filter((card) => card.id === card.id));
-    console.log(id);
-  };
 
   // изменить имя колонки
   const [title, setColumnTitle] = useState(columnTitle);
@@ -86,7 +57,6 @@ const Column: React.FC<Props> = ({
       >
         {title}
       </div>
-
       <div className="card__list">
         {cardsByColumnId.map((card) => {
           return <Card card={card} openCard={openCard} key={card.id + 1} />;
@@ -95,6 +65,8 @@ const Column: React.FC<Props> = ({
       {activeColumnInput ? (
         <ColumnInput
           // onClick={toggleInput}
+          columnTitle={columnTitle}
+          columnId={columnId}
           createCard={createCard}
           toggleInput={toggleInput}
         />

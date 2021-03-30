@@ -14,5 +14,5 @@
   align-self: flex-start;
   height: max-content;
   /* hidden for a reason */
-  display: none;
+  /* display: none; */
 }
