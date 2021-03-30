@@ -35,7 +35,6 @@ const ColumnList: React.FC<Props> = ({
           <Column
             openCard={openCard}
             createCard={createCard}
-            user={user}
             columnTitle={column.columnTitle}
             columnId={column.columnId}
             key={column.columnId}

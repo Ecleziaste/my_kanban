@@ -7,7 +7,6 @@ import Card from "../Card";
 type Props = {
   columnTitle: string;
   columnId: number;
-  user: string;
   cards: Array<any>;
   openCard: (arg: any) => void;
   createCard: (title: string, columnId: number, columnTitle: string) => void;
@@ -19,7 +18,6 @@ type Props = {
 const Column: React.FC<Props> = ({
   columnTitle,
   columnId,
-  user,
   cards,
   openCard,
   createCard,
@@ -34,9 +32,8 @@ const Column: React.FC<Props> = ({
     setActiveColumnInput(value);
   };
 
-  // useEffect(() => {}, []);
-
   // изменить имя колонки
+  // FIXME: в самой карточке не меняется, только внешне
   const [title, setColumnTitle] = useState(columnTitle);
   const changeColumnTitle = (value: string): void => {
     setColumnTitle(value);

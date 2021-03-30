@@ -3,6 +3,14 @@ import React, { useState, useEffect } from "react";
 import ColumnList from "./components/ColumnList";
 import PopupCard from "./components/PopupCard";
 
+export type Card = {
+  title: string;
+  description: string;
+  author: string;
+  id: number;
+  columnId: number;
+};
+
 const App = () => {
   // let userName = prompt("Введите имя пользователя", "user");
   const userName = "User";
@@ -22,48 +30,46 @@ const App = () => {
     ]);
   };
 
-  const [cards, setCards] = useState([
-    {
-      title: "Это ПРОТОКАРТОЧКА",
-      description: "... описание ...",
-      comments: ["0"],
-      author: userName,
-      id: 1,
-      columnId: 0,
-      columnTitle: "заголовок колонки",
-    },
-  ]);
+  const [cards, setCards] = useState<Array<Card>>([]);
   // создать новую карточку
   const createCard = (
     title: string,
     columnId: number,
     columnTitle: string
   ): void => {
-    setCards([
-      ...cards,
-      {
-        title,
-        description: "... описание ...",
-        comments: ["0"],
-        author: userName,
-        id: cards.length + 1,
-        columnId: columnId,
-        columnTitle: columnTitle,
-      },
-    ]);
+    if (title === "" || undefined) {
+      alert("карточка нуждается хотя бы в одном символе");
+    } else {
+      setCards([
+        ...cards,
+        {
+          title,
+          description: "",
+          author: userName,
+          id: cards.length + 1,
+          columnId: columnId,
+        },
+      ]);
+    }
   };
   // удалить карточку
   const deleteCard = (id: number): void => {
     closeCard();
     setCards(cards.filter((filteredCard) => filteredCard.id !== id));
-    console.log(id);
   };
 
-  const [card, setCard] = useState(null);
+  const [card, setCard] = useState<any>(null);
   // открытие закрытие попапа
-  const openCard = (value: any) => {
-    setCard(value);
-    console.log(value);
+  const openCard = (id: number) => {
+    const activeCard = cards.find((card) => card.id === id);
+    if (activeCard) {
+      const activeColumn = columns.filter(
+        (column) => column.columnId === activeCard.columnId
+      );
+      setCard(activeCard);
+      // setColumn(activeColumn);
+      console.log(id);
+    }
   };
   const closeCard = () => {
     setCard(null);

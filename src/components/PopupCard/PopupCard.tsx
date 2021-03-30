@@ -1,28 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import Comments from "../Comments";
+import { Card } from "../../App";
 
 type Props = {
-  card: any;
-  // card: {} | null;
+  card: Card;
   closeCard: (arg: any) => void;
   deleteCard: (arg: any) => void;
 };
 
 const PopupCard: React.FC<Props> = ({ card, closeCard, deleteCard }) => {
   // const commentsByCardId = comments.filter((comment) => comments.id === id);
+  const [description, setDescription] = useState(card.description);
+  const changeDescription = (value: string): void => {
+    card.description = value;
+    console.log(card.description);
+  };
 
   return (
     <div className="popup__wrapper">
       <div className="popup__card">
         <div className="popup__header">
-          <div
-            className="popup__title"
-            contentEditable={true}
-            suppressContentEditableWarning={true}
-            // FIXME: нужно менять значение в конкретной карточке
-          >
-            {card.title} created by {card.author} from column {card.columnTitle}
+          <div className="popup__title">
+            <div contentEditable={true} suppressContentEditableWarning={true}>
+              {card.title}
+            </div>
+            <div> From column {""}</div>
           </div>
           <button
             className="popup__closeCardBtn"
@@ -38,6 +41,7 @@ const PopupCard: React.FC<Props> = ({ card, closeCard, deleteCard }) => {
             <input
               className="popup__description_input"
               placeholder="Добавьте подробное описание здесь..."
+              onChange={(e) => changeDescription(e.target.value)}
             ></input>
           </div>
           <hr></hr>
