@@ -2,19 +2,13 @@ import React, { useState } from "react";
 import "./styles.css";
 
 type Props = {
-  // onClick: (arg: boolean) => void;
-  columnTitle: string;
-  columnId: number;
-  createCard: (title: string, columnId: number, columnTitle: string) => void;
+  // title: string;
+  id: number;
+  createCard: (title: string, columnId: number) => void;
   toggleInput: (arg: boolean) => void;
 };
 
-const ColumnInput: React.FC<Props> = ({
-  createCard,
-  toggleInput,
-  columnTitle,
-  columnId,
-}) => {
+const ColumnInput: React.FC<Props> = ({ createCard, toggleInput, id }) => {
   const closeInput = () => {
     toggleInput(false);
   };
@@ -34,7 +28,7 @@ const ColumnInput: React.FC<Props> = ({
       <button
         className="input__add_btn"
         onClick={() => {
-          createCard(title, columnId, columnTitle);
+          createCard(title, id);
           toggleInput(false);
         }}
       >

@@ -11,32 +11,51 @@ export type Card = {
   columnId: number;
 };
 
+export type Comment = {
+  text: string;
+  id: number;
+  cardId: number;
+  author: string;
+};
+
+export type Column = {
+  title: string;
+  id: number;
+};
+
 const App = () => {
   // let userName = prompt("Введите имя пользователя", "user");
   const userName = "User";
 
-  const [columns, addColumn] = useState([
-    { columnTitle: "TODO", columnId: 1 },
-    { columnTitle: "In Progress", columnId: 2 },
-    { columnTitle: "Testing", columnId: 3 },
-    { columnTitle: "Done", columnId: 4 },
+  const [columns, setColumns] = useState([
+    { title: "TODO", id: 1 },
+    { title: "In Progress", id: 2 },
+    { title: "Testing", id: 3 },
+    { title: "Done", id: 4 },
   ]);
+
+  // изменить имя колонки
+  const changeColumnTitle = (value: string, id: number): void => {
+    const columnsCopy = columns.map((column) => {
+      if (column.id === id) {
+        column.title = value;
+      }
+      return column;
+    });
+    setColumns(columnsCopy);
+  };
 
   // добавить колонку
   const handleClick = (): void => {
-    addColumn((columns) => [
+    setColumns((columns) => [
       ...columns,
-      { columnTitle: "New Column", columnId: columns.length + 1 },
+      { title: "New Column", id: columns.length + 1 },
     ]);
   };
-
+  // стейт карточек
   const [cards, setCards] = useState<Array<Card>>([]);
   // создать новую карточку
-  const createCard = (
-    title: string,
-    columnId: number,
-    columnTitle: string
-  ): void => {
+  const createCard = (title: string, columnId: number): void => {
     if (title === "" || undefined) {
       alert("карточка нуждается хотя бы в одном символе");
     } else {
@@ -58,17 +77,19 @@ const App = () => {
     setCards(cards.filter((filteredCard) => filteredCard.id !== id));
   };
 
+  // стейты для попапа
   const [card, setCard] = useState<any>(null);
+  const [column, setColumn] = useState<any>(null);
+
   // открытие закрытие попапа
   const openCard = (id: number) => {
     const activeCard = cards.find((card) => card.id === id);
     if (activeCard) {
-      const activeColumn = columns.filter(
-        (column) => column.columnId === activeCard.columnId
+      const activeColumn = columns.find(
+        (column) => column.id === activeCard.columnId
       );
+      setColumn(activeColumn);
       setCard(activeCard);
-      // setColumn(activeColumn);
-      console.log(id);
     }
   };
   const closeCard = () => {
@@ -84,19 +105,45 @@ const App = () => {
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
+  // стейт для комментов
+  const [comments, setComments] = useState<Array<Comment>>([]);
+
+  const createComment = (text: string): void => {
+    if (text === "" || undefined) {
+      alert("пустой коммент не будет добавлен");
+    } else {
+      setComments([
+        ...comments,
+        {
+          text,
+          author: userName,
+          id: comments.length + 1,
+          cardId: card.id,
+        },
+      ]);
+    }
+  };
 
   return (
     <div className="App">
       <ColumnList
         columns={columns}
-        user={userName}
         handleClick={handleClick}
         cards={cards}
         openCard={openCard}
         createCard={createCard}
+        changeColumnTitle={changeColumnTitle}
       />
       {card && (
-        <PopupCard card={card} deleteCard={deleteCard} closeCard={closeCard} />
+        <PopupCard
+          comments={comments}
+          card={card}
+          columnTitle={column.title}
+          deleteCard={deleteCard}
+          closeCard={closeCard}
+          // changeDescription={changeDescription}
+          createComment={createComment}
+        />
       )}
     </div>
   );

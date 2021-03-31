@@ -5,25 +5,25 @@ import ColumnInput from "../ColumnInput";
 import Card from "../Card";
 
 type Props = {
-  columnTitle: string;
-  columnId: number;
+  title: string;
+  id: number;
   cards: Array<any>;
   openCard: (arg: any) => void;
-  createCard: (title: string, columnId: number, columnTitle: string) => void;
-  // changeColumnTitle: (arg: any) => void;
-
+  createCard: (title: string, columnId: number) => void;
+  changeColumnTitle: (title: string, id: number) => void;
   // comments: number;
 };
 
 const Column: React.FC<Props> = ({
-  columnTitle,
-  columnId,
+  title,
+  id,
   cards,
   openCard,
   createCard,
-  // changeColumnTitle,
+  changeColumnTitle,
 }) => {
   const [activeColumnInput, setActiveColumnInput] = useState(false);
+  // const divRef = useRef(null);
   const handleClick = (): void => {
     setActiveColumnInput(true);
   };
@@ -32,14 +32,7 @@ const Column: React.FC<Props> = ({
     setActiveColumnInput(value);
   };
 
-  // изменить имя колонки
-  // FIXME: в самой карточке не меняется, только внешне
-  const [title, setColumnTitle] = useState(columnTitle);
-  const changeColumnTitle = (value: string): void => {
-    setColumnTitle(value);
-  };
-
-  const cardsByColumnId = cards.filter((card) => card.columnId === columnId);
+  const cardsByColumnId = cards.filter((card) => card.columnId === id);
 
   return (
     <div className="column">
@@ -47,10 +40,10 @@ const Column: React.FC<Props> = ({
         className="column__name"
         contentEditable={true}
         suppressContentEditableWarning={true}
-        onChange={(e) =>
-          changeColumnTitle((e.target as HTMLTextAreaElement).value)
+        onInput={(e) =>
+          changeColumnTitle(e.currentTarget.textContent || "", id)
         }
-        // FIXME: fast solution
+        defaultValue={title}
       >
         {title}
       </div>
@@ -62,8 +55,7 @@ const Column: React.FC<Props> = ({
       {activeColumnInput ? (
         <ColumnInput
           // onClick={toggleInput}
-          columnTitle={columnTitle}
-          columnId={columnId}
+          id={id}
           createCard={createCard}
           toggleInput={toggleInput}
         />

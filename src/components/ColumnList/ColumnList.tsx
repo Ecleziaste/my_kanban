@@ -3,22 +3,22 @@ import "./styles.css";
 import Column from "../Column";
 
 type Props = {
-  user: string;
-  // TODO: прописать интерфейс?
+  // user: string;
   columns: Array<any>;
   handleClick: (arg: any) => void;
   cards: Array<any>;
   openCard: (arg: any) => void;
-  createCard: (title: string, columnId: number, columnTitle: string) => void;
+  createCard: (title: string, columnId: number) => void;
+  changeColumnTitle: (title: string, id: number) => void;
 };
 
 const ColumnList: React.FC<Props> = ({
-  user,
   columns,
   handleClick,
   cards,
   openCard,
   createCard,
+  changeColumnTitle,
 }) => {
   // const [title, setColumnTitle] = useState(columnTitle);
   // const changeColumnTitle = (value: string): void => {
@@ -35,10 +35,11 @@ const ColumnList: React.FC<Props> = ({
           <Column
             openCard={openCard}
             createCard={createCard}
-            columnTitle={column.columnTitle}
-            columnId={column.columnId}
-            key={column.columnId}
+            title={column.title}
+            id={column.id}
+            key={column.id}
             cards={cards}
+            changeColumnTitle={changeColumnTitle}
           />
         );
       })}

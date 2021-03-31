@@ -11,9 +11,16 @@
   width: 15%;
 }
 .column__name {
-  align-self: center;
+  /* align-self: center; */
   font-size: 20px;
   font-weight: 500;
+  margin: 5px;
+  cursor: pointer;
+}
+.column__name_input {
+  /* text-align: center; */
+  font-size: 20px;
+  font-weight: 400;
 }
 .card__list {
   width: 96%;

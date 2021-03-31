@@ -1,54 +1,32 @@
-.popup__wrapper {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 500;
-}
-.popup__card {
-  background-color: rgba(131, 120, 120, 0.95);
+.comment__wrapper {
   display: flex;
   flex-flow: column nowrap;
-  margin: 0 auto;
-  width: 500px;
-  height: 400px;
-  z-index: 501;
-  border: 3px solid black;
-  border-radius: 10px;
-}
-.popup__header {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  margin: 5px;
-}
-.popup__title {
-  align-self: center;
-  margin: 5px;
-}
-.popup__closeBtn {
-  display: block;
-  width: 35px;
-  height: 35px;
-  margin: 5px;
-  border-radius: 4px;
-}
-.popup__body {
+  width: 80%;
   margin: 5px;
   padding: 5px;
+  border: 2px solid rgb(104, 48, 104);
+  border-radius: 5px;
 }
-.popup__description {
-  margin: 5px;
+.comment__input {
 }
-.popup__cardDeleteBtn {
+.comment__author {
+}
+.comment__text {
+  word-wrap: break-word;
+  overflow: hidden;
+}
+.comment__add_btn {
   display: flex;
-  align-self: flex-end;
-  border-radius: 4px;
-  margin: 5px;
-  padding: 10px;
+  align-self: flex-start;
+}
+.comment__change_btn,
+.comment__del_btn {
+  cursor: pointer;
+}
+.comment__content_wrapper,
+.comment__buttons_wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  margin: 5px 0;
 }

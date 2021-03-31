@@ -8,16 +8,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 500;
+  /* z-index: 500; */
 }
 .popup__card {
   background-color: rgba(131, 120, 120, 0.95);
   display: flex;
   flex-flow: column nowrap;
-  margin: 0 auto;
   width: 500px;
-  height: 400px;
-  z-index: 501;
+  /* margin: 0 auto; */
+  padding: 10px;
+  /* z-index: 501; */
   border: 3px solid black;
   border-radius: 10px;
 }
@@ -31,37 +31,50 @@
   align-self: center;
   margin: 5px;
 }
-.popup__closeCardBtn {
+.popup__close_card_btn {
   display: block;
   width: 35px;
   height: 35px;
   margin: 5px;
   border-radius: 4px;
+  cursor: pointer;
 }
 .popup__body {
   display: flex;
   flex-flow: column nowrap;
-  margin: 5px;
   padding: 5px;
 }
 .popup__description {
   width: 90%;
   margin: 5px;
+  cursor: pointer;
 }
 .popup__description_input {
   width: 100%;
 }
 hr {
-  margin: 10px 0;
+  margin: 15px 0;
 }
 .popup__comment_input {
   width: 80%;
-  margin: 5px;
+  cursor: pointer;
 }
-.popup__comment_input .popup__cardDeleteBtn {
+.popup__comment_input {
+  display: flex;
+  /* align-self: flex-start; */
+  border-radius: 4px;
+  margin: 5px;
+  padding: 10px;
+}
+.popup__input_add_btn,
+.popup__input_del_btn {
+  cursor: pointer;
+}
+.popup__card_del_btn {
   display: flex;
   align-self: flex-end;
   border-radius: 4px;
   margin: 5px;
   padding: 10px;
+  cursor: pointer;
 }
