@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./styles.css";
-import Comments from "../Comments";
+import Comment from "../Comment";
 import { Card } from "../../App";
-import { Comment } from "../../App";
+import { CommentType } from "../../App";
 
 type Props = {
   card: Card;
-  comments: Array<Comment>;
+  comments: Array<CommentType>;
   columnTitle: string;
   closeCard: (arg: any) => void;
   deleteCard: (arg: any) => void;
@@ -113,7 +113,13 @@ const PopupCard: React.FC<Props> = ({
           )}
           {commentsByCardId &&
             commentsByCardId.map((comment) => {
-              return <Comments text={comment.text} key={comment.id} />;
+              return (
+                <Comment
+                  author={comment.author}
+                  text={comment.text}
+                  key={comment.id}
+                />
+              );
             })}
         </div>
 

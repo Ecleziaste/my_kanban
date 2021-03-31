@@ -11,7 +11,7 @@ export type Card = {
   columnId: number;
 };
 
-export type Comment = {
+export type CommentType = {
   text: string;
   id: number;
   cardId: number;
@@ -106,7 +106,7 @@ const App = () => {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
   // стейт для комментов
-  const [comments, setComments] = useState<Array<Comment>>([]);
+  const [comments, setComments] = useState<Array<CommentType>>([]);
 
   const createComment = (text: string): void => {
     if (text === "" || undefined) {

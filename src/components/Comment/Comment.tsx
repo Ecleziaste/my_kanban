@@ -2,10 +2,11 @@ import React from "react";
 import "./styles.css";
 
 type Props = {
+  author: string;
   text: string;
 };
 
-const Comments: React.FC<Props> = ({ text }) => {
+const Comment: React.FC<Props> = ({ author, text }) => {
   // const commentsByCardId = comments.filter((comment) => comments.id === id);
 
   return (
@@ -13,7 +14,7 @@ const Comments: React.FC<Props> = ({ text }) => {
       {/* <input className="comments__input" placeholder=""></input>
       <button className="comments__addBtn">Добавить</button> */}
       <div className="comment__content_wrapper">
-        <div className="comment__author">Author said: </div>
+        <div className="comment__author">{author} said: </div>
         <div className="comment__text">{text}</div>
       </div>
       <div className="comment__buttons_wrapper">
@@ -24,4 +25,4 @@ const Comments: React.FC<Props> = ({ text }) => {
   );
 };
 
-export default Comments;
+export default Comment;
