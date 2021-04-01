@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
 import Column from "../Column";
+import { CommentType } from "../../App";
 
 type Props = {
   // user: string;
@@ -10,6 +11,7 @@ type Props = {
   openCard: (arg: any) => void;
   createCard: (title: string, columnId: number) => void;
   changeColumnTitle: (title: string, id: number) => void;
+  comments: Array<CommentType>;
 };
 
 const ColumnList: React.FC<Props> = ({
@@ -19,12 +21,8 @@ const ColumnList: React.FC<Props> = ({
   openCard,
   createCard,
   changeColumnTitle,
+  comments,
 }) => {
-  // const [title, setColumnTitle] = useState(columnTitle);
-  // const changeColumnTitle = (value: string): void => {
-  //   setColumnTitle(value);
-  // };
-
   return (
     <div className="column__list">
       {/* <button className="add__column" onClick={handleClick}>
@@ -40,6 +38,7 @@ const ColumnList: React.FC<Props> = ({
             key={column.id}
             cards={cards}
             changeColumnTitle={changeColumnTitle}
+            comments={comments}
           />
         );
       })}

@@ -24,16 +24,23 @@ export type Column = {
 };
 
 const App = () => {
-  // let userName = prompt("Введите имя пользователя", "user");
+  // TODO:
+  // const userName = prompt("Введите имя пользователя", "User");
   const userName = "User";
-
+  // стейт колонок
   const [columns, setColumns] = useState([
     { title: "TODO", id: 1 },
     { title: "In Progress", id: 2 },
     { title: "Testing", id: 3 },
     { title: "Done", id: 4 },
   ]);
-
+  // стейт карточек
+  const [cards, setCards] = useState<Array<Card>>([]);
+  // стейты для попапа
+  const [card, setCard] = useState<any>(null);
+  const [column, setColumn] = useState<any>(null);
+  // стейт для комментов
+  const [comments, setComments] = useState<Array<CommentType>>([]);
   // изменить имя колонки
   const changeColumnTitle = (value: string, id: number): void => {
     const columnsCopy = columns.map((column) => {
@@ -52,8 +59,7 @@ const App = () => {
       { title: "New Column", id: columns.length + 1 },
     ]);
   };
-  // стейт карточек
-  const [cards, setCards] = useState<Array<Card>>([]);
+
   // создать новую карточку
   const createCard = (title: string, columnId: number): void => {
     if (title === "" || undefined) {
@@ -76,10 +82,6 @@ const App = () => {
     closeCard();
     setCards(cards.filter((filteredCard) => filteredCard.id !== id));
   };
-
-  // стейты для попапа
-  const [card, setCard] = useState<any>(null);
-  const [column, setColumn] = useState<any>(null);
 
   // открытие закрытие попапа
   const openCard = (id: number) => {
@@ -105,12 +107,11 @@ const App = () => {
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
-  // стейт для комментов
-  const [comments, setComments] = useState<Array<CommentType>>([]);
-
+  // создать коммент
   const createComment = (text: string): void => {
     if (text === "" || undefined) {
       alert("пустой коммент не будет добавлен");
+      // FIXME: введенное значение прошлого коммента сохраняется, если не ввести новое
     } else {
       setComments([
         ...comments,
@@ -122,8 +123,16 @@ const App = () => {
         },
       ]);
     }
+    // const commentData = {text, id};
+    // return commentData
   };
-
+  // удалить коммент
+  const deleteComment = (id: number): void => {
+    setComments(
+      comments.filter((filteredComment) => filteredComment.id !== id)
+    );
+    // openCard()
+  };
   return (
     <div className="App">
       <ColumnList
@@ -133,6 +142,7 @@ const App = () => {
         openCard={openCard}
         createCard={createCard}
         changeColumnTitle={changeColumnTitle}
+        comments={comments}
       />
       {card && (
         <PopupCard
@@ -143,6 +153,7 @@ const App = () => {
           closeCard={closeCard}
           // changeDescription={changeDescription}
           createComment={createComment}
+          deleteComment={deleteComment}
         />
       )}
     </div>

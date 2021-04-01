@@ -12,6 +12,7 @@ type Props = {
   deleteCard: (arg: any) => void;
   // changeDescription: (arg: string) => void;
   createComment: (arg: string) => void;
+  deleteComment: (arg: number) => void;
 };
 
 const PopupCard: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const PopupCard: React.FC<Props> = ({
   // changeDescription,
   comments,
   createComment,
+  deleteComment,
 }) => {
   const [description, setDescription] = useState(card.description);
   const changeDescription = (value: string): void => {
@@ -87,40 +89,46 @@ const PopupCard: React.FC<Props> = ({
             </div>
           </div>
           <hr></hr>
-          {activeCommentInput ? (
-            <div className="popup__comment_input">
+          <div className="comments__wrapper">
+            {activeCommentInput ? (
+              <div className="popup__comment_input">
+                <input
+                  autoFocus
+                  className="comments__input"
+                  placeholder="Напишите комментарий..."
+                  onChange={(e) => setText(e.target.value)}
+                ></input>
+                <button
+                  className="comments__add_btn"
+                  onClick={() => {
+                    createComment(text);
+                    setText("");
+                    toggleCommentInput(false);
+                  }}
+                >
+                  Добавить
+                </button>
+              </div>
+            ) : (
               <input
-                className="comments__input"
-                placeholder="Напишите комеентарий..."
-                onChange={(e) => setText(e.target.value)}
+                onClick={handleClick}
+                className="popup__comment_input"
+                placeholder="Напишите комментарий..."
               ></input>
-              <button
-                className="comments__addBtn"
-                onClick={() => {
-                  createComment(text);
-                  toggleCommentInput(false);
-                }}
-              >
-                Добавить
-              </button>
-            </div>
-          ) : (
-            <input
-              onClick={handleClick}
-              className="popup__comment_input"
-              placeholder="Напишите комментарий..."
-            ></input>
-          )}
-          {commentsByCardId &&
-            commentsByCardId.map((comment) => {
-              return (
-                <Comment
-                  author={comment.author}
-                  text={comment.text}
-                  key={comment.id}
-                />
-              );
-            })}
+            )}
+            {commentsByCardId &&
+              commentsByCardId.map((comment) => {
+                return (
+                  <Comment
+                    author={comment.author}
+                    text={comment.text}
+                    key={comment.id}
+                    id={comment.id}
+                    deleteComment={deleteComment}
+                  />
+                );
+              })}
+          </div>
         </div>
 
         <button

@@ -16,3 +16,6 @@
   /* hidden for a reason */
   /* display: none; */
 }
+.card__input {
+  align-self: center;
+}

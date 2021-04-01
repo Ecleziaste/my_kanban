@@ -22,21 +22,24 @@ const ColumnInput: React.FC<Props> = ({ createCard, toggleInput, id }) => {
   return (
     <div className="card__input">
       <input
-        placeholder="Введите заголовок для карточки"
+        className="input__itself"
+        placeholder="&nbsp;Введите заголовок для карточки"
         onChange={(e) => setTitle(e.target.value)}
       ></input>
-      <button
-        className="input__add_btn"
-        onClick={() => {
-          createCard(title, id);
-          toggleInput(false);
-        }}
-      >
-        Добавить
-      </button>
-      <button className="input__del_btn" onClick={closeInput}>
-        &#10006;
-      </button>
+      <div className="input__buttons_wrapper">
+        <button
+          className="input__add_btn"
+          onClick={() => {
+            createCard(title, id);
+            toggleInput(false);
+          }}
+        >
+          Добавить
+        </button>
+        <button className="input__del_btn" onClick={closeInput}>
+          &#10006;
+        </button>
+      </div>
     </div>
   );
 };

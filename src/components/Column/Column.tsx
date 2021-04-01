@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./styles.css";
 import ColumnInput from "../ColumnInput";
 import Card from "../Card";
+import { CommentType } from "../../App";
 
 type Props = {
   title: string;
@@ -11,7 +12,7 @@ type Props = {
   openCard: (arg: any) => void;
   createCard: (title: string, columnId: number) => void;
   changeColumnTitle: (title: string, id: number) => void;
-  // comments: number;
+  comments: Array<CommentType>;
 };
 
 const Column: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const Column: React.FC<Props> = ({
   openCard,
   createCard,
   changeColumnTitle,
+  comments,
 }) => {
   const [activeColumnInput, setActiveColumnInput] = useState(false);
   // const divRef = useRef(null);
@@ -34,9 +36,27 @@ const Column: React.FC<Props> = ({
 
   const cardsByColumnId = cards.filter((card) => card.columnId === id);
 
+  //выделение текста зафокусенного элемента
+  const handleFocus = (e: any): void => {
+    e.target.classList.add("focused");
+    // const elem = document.querySelector("column__name") || "";
+    // elem.select();
+    // FIXME: падает из-за селекта!
+    // e.target.select();
+  };
+  // const selectAllText = (e: any): void => {
+  //   e.target.textContent.select();
+  // };
+  const handleBlur = (e: any): void => {
+    e.target.classList.remove("focused");
+  };
+
   return (
     <div className="column">
       <div
+        // onClick={selectAllText}У
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         className="column__name"
         contentEditable={true}
         suppressContentEditableWarning={true}
@@ -49,7 +69,14 @@ const Column: React.FC<Props> = ({
       </div>
       <div className="card__list">
         {cardsByColumnId.map((card) => {
-          return <Card card={card} openCard={openCard} key={card.id + 1} />;
+          return (
+            <Card
+              card={card}
+              openCard={openCard}
+              key={card.id + 1}
+              comments={comments}
+            />
+          );
         })}
       </div>
       {activeColumnInput ? (

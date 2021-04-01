@@ -20,6 +20,7 @@
   /* z-index: 501; */
   border: 3px solid black;
   border-radius: 10px;
+  /* overflow: scroll; */
 }
 .popup__header {
   display: flex;
@@ -52,19 +53,33 @@
 .popup__description_input {
   width: 100%;
 }
+/* input :focus {
+  box-shadow: 0 0 5px 1px #036788;
+  background: #fffac0;
+} */
 hr {
   margin: 15px 0;
 }
 .popup__comment_input {
   width: 80%;
   cursor: pointer;
-}
-.popup__comment_input {
   display: flex;
+  flex-flow: column nowrap;
   /* align-self: flex-start; */
   border-radius: 4px;
   margin: 5px;
   padding: 10px;
+}
+.comments__input {
+  padding: 10px;
+  border-radius: 5px;
+  margin: -10px;
+}
+.comments__add_btn {
+  width: 20%;
+  margin: 15px 0 20px -10px;
+  background-color: rgb(163, 236, 89);
+  border-radius: 5px;
 }
 .popup__input_add_btn,
 .popup__input_del_btn {
@@ -77,4 +92,8 @@ hr {
   margin: 5px;
   padding: 10px;
   cursor: pointer;
+}
+.comments__wrapper {
+  height: 40%;
+  /* overflow: scroll; */
 }
