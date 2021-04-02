@@ -13,7 +13,7 @@ const Card: React.FC<Props> = ({ openCard, card, comments }) => {
   const commentsCount = comments.filter(
     (comment) => comment.cardId === card.id
   );
-  console.log(commentsCount);
+
   return (
     <button className="card" onClick={() => openCard(card.id)}>
       <div>{card.title}</div>

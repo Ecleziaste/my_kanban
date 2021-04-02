@@ -3,6 +3,11 @@ import React, { useState, useEffect } from "react";
 import ColumnList from "./components/ColumnList";
 import PopupCard from "./components/PopupCard";
 
+const LocalStorageKeys = {
+  cards: "cards",
+  user: "user",
+};
+
 export type Card = {
   title: string;
   description: string;
@@ -25,8 +30,12 @@ export type Column = {
 
 const App = () => {
   // TODO:
-  // const userName = prompt("Введите имя пользователя", "User");
+  // const userName: any = prompt("Введите имя пользователя", "User");
   const userName = "User";
+  // const [userName, setUser] = useState<string>(
+  //   JSON.parse(localStorage.getItem(LocalStorageKeys.user) || "User")
+  // );
+  // const newUser = () => {};
   // стейт колонок
   const [columns, setColumns] = useState([
     { title: "TODO", id: 1 },
@@ -35,9 +44,12 @@ const App = () => {
     { title: "Done", id: 4 },
   ]);
   // стейт карточек
-  const [cards, setCards] = useState<Array<Card>>([]);
+  const [cards, setCards] = useState<Array<Card>>(
+    JSON.parse(localStorage.getItem(LocalStorageKeys.cards) || "[]")
+  );
   // стейты для попапа
   const [card, setCard] = useState<any>(null);
+
   const [column, setColumn] = useState<any>(null);
   // стейт для комментов
   const [comments, setComments] = useState<Array<CommentType>>([]);
@@ -65,22 +77,28 @@ const App = () => {
     if (title === "" || undefined) {
       alert("карточка нуждается хотя бы в одном символе");
     } else {
-      setCards([
-        ...cards,
-        {
-          title,
-          description: "",
-          author: userName,
-          id: cards.length + 1,
-          columnId: columnId,
-        },
-      ]);
+      const newCard = {
+        title,
+        description: "",
+        author: userName,
+        id: cards.length + 1,
+        columnId: columnId,
+      };
+      setCards([...cards, newCard]);
+      localStorage.setItem(
+        LocalStorageKeys.cards,
+        JSON.stringify([...cards, newCard])
+      );
     }
   };
   // удалить карточку
   const deleteCard = (id: number): void => {
     closeCard();
     setCards(cards.filter((filteredCard) => filteredCard.id !== id));
+  };
+  // удалить комменты с карточкой
+  const deleteComments = (): void => {
+    setComments(comments.filter((comment) => comment.cardId !== card.id));
   };
 
   // открытие закрытие попапа
@@ -107,6 +125,18 @@ const App = () => {
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
+  // стейт описания
+  const [description, setDescription] = useState<any>(null);
+  // сохранить описание
+  const storeDescription = (value: string): void => {
+    setDescription(value);
+  };
+  // изменить описание
+  const changeDescription = (): void => {
+    setDescription(card.description);
+    return (card.description = description);
+  };
+
   // создать коммент
   const createComment = (text: string): void => {
     if (text === "" || undefined) {
@@ -150,8 +180,10 @@ const App = () => {
           card={card}
           columnTitle={column.title}
           deleteCard={deleteCard}
+          deleteComments={deleteComments}
           closeCard={closeCard}
-          // changeDescription={changeDescription}
+          storeDescription={storeDescription}
+          changeDescription={changeDescription}
           createComment={createComment}
           deleteComment={deleteComment}
         />

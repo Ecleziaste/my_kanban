@@ -29,7 +29,6 @@ const Column: React.FC<Props> = ({
   const handleClick = (): void => {
     setActiveColumnInput(true);
   };
-
   const toggleInput = (value: boolean): void => {
     setActiveColumnInput(value);
   };
@@ -39,14 +38,9 @@ const Column: React.FC<Props> = ({
   //выделение текста зафокусенного элемента
   const handleFocus = (e: any): void => {
     e.target.classList.add("focused");
-    // const elem = document.querySelector("column__name") || "";
-    // elem.select();
-    // FIXME: падает из-за селекта!
+    // FIXME: падает из-за селекта! Как иначе выделить весь текст при фокусе/клике на этот див?
     // e.target.select();
   };
-  // const selectAllText = (e: any): void => {
-  //   e.target.textContent.select();
-  // };
   const handleBlur = (e: any): void => {
     e.target.classList.remove("focused");
   };
@@ -54,7 +48,7 @@ const Column: React.FC<Props> = ({
   return (
     <div className="column">
       <div
-        // onClick={selectAllText}У
+        // onClick={selectAllText}
         onFocus={handleFocus}
         onBlur={handleBlur}
         className="column__name"

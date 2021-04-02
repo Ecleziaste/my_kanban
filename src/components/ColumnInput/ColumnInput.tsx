@@ -22,9 +22,14 @@ const ColumnInput: React.FC<Props> = ({ createCard, toggleInput, id }) => {
   return (
     <div className="card__input">
       <input
-        className="input__itself"
+        autoFocus
+        className="input__itself focused"
         placeholder="&nbsp;Введите заголовок для карточки"
         onChange={(e) => setTitle(e.target.value)}
+        onBlur={() => {
+          createCard(title, id);
+          toggleInput(false);
+        }}
       ></input>
       <div className="input__buttons_wrapper">
         <button

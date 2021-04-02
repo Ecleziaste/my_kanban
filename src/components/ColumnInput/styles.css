@@ -3,10 +3,10 @@
   margin: 5px auto;
   padding: 0;
 }
-.column__button {
+/* .column__button {
   margin: 5px auto;
   height: 25%;
-}
+} */
 .input__buttons_wrapper {
   display: flex;
   justify-content: space-between;
@@ -18,7 +18,7 @@
 }
 .input__itself:focus {
   box-shadow: 0 0 5px 1px #036788;
-  background: #e5f5ff;
+  background: white;
 }
 .input__add_btn {
   margin-top: 5px;

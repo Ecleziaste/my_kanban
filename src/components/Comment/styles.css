@@ -4,16 +4,22 @@
   width: 80%;
   margin: 5px;
   padding: 5px;
-  border: 2px solid rgb(104, 48, 104);
   border-radius: 5px;
+}
+.comment__content_wrapper {
+  display: flex;
+  flex-flow: column nowrap;
 }
 .comment__input {
 }
 .comment__author {
+  padding: 5px;
 }
 .comment__text {
   word-wrap: break-word;
   overflow: hidden;
+  border: 2px solid rgb(104, 48, 104);
+  padding: 2px;
 }
 .comment__add_btn {
   display: flex;
@@ -22,8 +28,8 @@
 .comment__change_btn,
 .comment__del_btn {
   cursor: pointer;
+  margin-left: 5px;
 }
-.comment__content_wrapper,
 .comment__buttons_wrapper {
   display: flex;
   flex-flow: row nowrap;
