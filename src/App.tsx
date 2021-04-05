@@ -5,6 +5,7 @@ import PopupCard from "./components/PopupCard";
 
 const LocalStorageKeys = {
   cards: "cards",
+  comments: "comments",
   user: "user",
 };
 
@@ -30,12 +31,16 @@ export type Column = {
 
 const App = () => {
   // TODO:
-  // const userName: any = prompt("Введите имя пользователя", "User");
-  const userName = "User";
-  // const [userName, setUser] = useState<string>(
-  //   JSON.parse(localStorage.getItem(LocalStorageKeys.user) || "User")
-  // );
-  // const newUser = () => {};
+  const [userName, setUserName] = useState<any>(
+    JSON.parse(localStorage.getItem(LocalStorageKeys.user) || "null")
+  );
+  const askUserName = () => {
+    if (userName === null || "") {
+      setUserName(prompt("Введите имя пользователя", "User"));
+    }
+    localStorage.setItem(LocalStorageKeys.user, JSON.stringify(userName));
+  };
+  askUserName();
   // стейт колонок
   const [columns, setColumns] = useState([
     { title: "TODO", id: 1 },
@@ -52,7 +57,9 @@ const App = () => {
 
   const [column, setColumn] = useState<any>(null);
   // стейт для комментов
-  const [comments, setComments] = useState<Array<CommentType>>([]);
+  const [comments, setComments] = useState<Array<CommentType>>(
+    JSON.parse(localStorage.getItem(LocalStorageKeys.comments) || "[]")
+  );
   // изменить имя колонки
   const changeColumnTitle = (value: string, id: number): void => {
     const columnsCopy = columns.map((column) => {
@@ -63,7 +70,6 @@ const App = () => {
     });
     setColumns(columnsCopy);
   };
-
   // добавить колонку
   const handleClick = (): void => {
     setColumns((columns) => [
@@ -71,7 +77,6 @@ const App = () => {
       { title: "New Column", id: columns.length + 1 },
     ]);
   };
-
   // создать новую карточку
   const createCard = (title: string, columnId: number): void => {
     if (title === "" || undefined) {
@@ -95,12 +100,15 @@ const App = () => {
   const deleteCard = (id: number): void => {
     closeCard();
     setCards(cards.filter((filteredCard) => filteredCard.id !== id));
+    localStorage.setItem(
+      LocalStorageKeys.cards,
+      JSON.stringify(cards.filter((filteredCard) => filteredCard.id !== id))
+    );
   };
   // удалить комменты с карточкой
   const deleteComments = (): void => {
     setComments(comments.filter((comment) => comment.cardId !== card.id));
   };
-
   // открытие закрытие попапа
   const openCard = (id: number) => {
     const activeCard = cards.find((card) => card.id === id);
@@ -153,16 +161,14 @@ const App = () => {
         },
       ]);
     }
-    // const commentData = {text, id};
-    // return commentData
   };
   // удалить коммент
   const deleteComment = (id: number): void => {
     setComments(
       comments.filter((filteredComment) => filteredComment.id !== id)
     );
-    // openCard()
   };
+
   return (
     <div className="App">
       <ColumnList

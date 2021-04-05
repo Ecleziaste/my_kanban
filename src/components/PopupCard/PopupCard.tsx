@@ -177,7 +177,6 @@ const PopupCard: React.FC<Props> = ({
                 >
                   Добавить
                 </button>
-                {/*TODO: useEffect для закрытия инпута коммента по клику вне него? */}
               </div>
             ) : (
               <input
