@@ -10,11 +10,12 @@ type Props = {
   columnTitle: string;
   closeCard: (arg: any) => void;
   deleteCard: (arg: any) => void;
-  deleteComments: () => void;
+  deleteAllComments: () => void;
   storeDescription: (arg: string) => void;
   changeDescription: () => void;
   createComment: (arg: string) => void;
   deleteComment: (arg: number) => void;
+  changeTitle: (args: any) => void
 };
 
 const PopupCard: React.FC<Props> = ({
@@ -22,12 +23,13 @@ const PopupCard: React.FC<Props> = ({
   columnTitle,
   closeCard,
   deleteCard,
-  deleteComments,
+  deleteAllComments,
   storeDescription,
   changeDescription,
   comments,
   createComment,
   deleteComment,
+  changeTitle
 }) => {
   // выделить текст внутри инпута
   const searchInput = useRef<any>(null);
@@ -84,7 +86,7 @@ const PopupCard: React.FC<Props> = ({
     <div
       className="popup__wrapper"
       // TODO: сделать закрытие по клику мимо окна, мб отдельный компонент нужен?
-      //  onClick={() => closeCard(null)}
+      // onClick={() => closeCard(null)}
     >
       <div className="popup__card">
         <div className="popup__header">
@@ -94,7 +96,8 @@ const PopupCard: React.FC<Props> = ({
               onBlur={handleTitleBlur}
               contentEditable={true}
               suppressContentEditableWarning={true}
-              onInput={(e) => (card.title = e.currentTarget.textContent || "")}
+              onInput={(e) => changeTitle(e.currentTarget.textContent)}
+              // onInput={(e) => (card.title = e.currentTarget.textContent)}
             >
               {card.title}
             </div>
@@ -207,7 +210,7 @@ const PopupCard: React.FC<Props> = ({
           className="popup__card_del_btn"
           onClick={() => {
             deleteCard(card.id);
-            deleteComments();
+            deleteAllComments();
             console.log(comments);
           }}
         >

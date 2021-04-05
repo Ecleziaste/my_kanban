@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   overflow: scroll;
-  /* z-index: 500; */
+  z-index: 500;
 }
 .popup__card {
   background-color: rgba(131, 120, 120, 0.95);
