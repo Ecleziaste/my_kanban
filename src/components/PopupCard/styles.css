@@ -5,18 +5,19 @@
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
+  margin: 0 auto;
   overflow: scroll;
   z-index: 500;
 }
 .popup__card {
   background-color: rgba(131, 120, 120, 0.95);
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column wrap;
   width: 500px;
-  /* margin: 0 auto; */
+  margin: 5% auto;
   padding: 10px;
   z-index: 501;
   border: 3px solid black;

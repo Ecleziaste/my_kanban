@@ -4,44 +4,28 @@ import Comment from "../Comment";
 import { Card } from "../../App";
 import { CommentType } from "../../App";
 
-type Props = {
-  card: Card;
-  comments: Array<CommentType>;
-  columnTitle: string;
-  closeCard: (arg: any) => void;
-  deleteCard: (arg: any) => void;
-  deleteAllComments: () => void;
-  storeDescription: (arg: string) => void;
-  changeDescription: () => void;
-  createComment: (arg: string) => void;
-  deleteComment: (arg: number) => void;
-  changeTitle: (args: any) => void
-};
-
 const PopupCard: React.FC<Props> = ({
   card,
   columnTitle,
   closeCard,
   deleteCard,
   deleteAllComments,
-  storeDescription,
   changeDescription,
   comments,
   createComment,
   deleteComment,
-  changeTitle
+  changeTitle,
+  changeComment,
+  user,
 }) => {
-  // выделить текст внутри инпута
   const searchInput = useRef<any>(null);
-  // FIXME: работает по клику,поавтофокусу - нет
+
   function handleFocus() {
     if (searchInput.current !== null) {
-      // searchInput.current.focus();
       searchInput.current.select();
-      // searchInput.current.setSelectionRange(card.description.length, 0);
     }
   }
-  // логика инпута описания
+
   const [activeDescriptionInput, setActiveDescriptionInput] = useState(false);
   const handleDescriptionClick = (): void => {
     setActiveDescriptionInput(true);
@@ -49,9 +33,7 @@ const PopupCard: React.FC<Props> = ({
   const toggleDescriptionInput = (value: boolean): void => {
     setActiveDescriptionInput(value);
   };
-  // // TODO: стейт кнопки "изменить" у описания
-  // const [changeDescriptionBtn, setChangeDescriptionBtn] = useState(false);
-  // логика инпута коммента
+
   const [activeCommentInput, setActiveCommentInput] = useState(false);
   const handleClick = (): void => {
     setActiveCommentInput(true);
@@ -59,45 +41,42 @@ const PopupCard: React.FC<Props> = ({
   const toggleCommentInput = (value: boolean): void => {
     setActiveCommentInput(value);
   };
-  // стейт текста, который идет в коммент при нажатии на кнопку Добавить
+
+  const handleTitleBlur = (e: any): void => {
+    e.target.classList.remove("focused");
+  };
+  const handleDescriptionBlur = (): void => {
+    toggleDescriptionInput(false);
+  };
+
   const [text, setText] = useState("");
-  // фильтруем комменты по айди с активной карточкой
+
   const commentsByCardId = comments.filter(
     (comment) => comment.cardId === card.id
   );
 
-  const handleTitleFocus = (e: any): void => {
-    e.target.classList.add("focused");
-    // e.current.setSelectionRange(0, card.title.length);
-    // FIXME: падает из-за селекта! Как иначе выделить весь текст при фокусе/клике на этот див?
-    // e.target.select();
+  const clickedParent = () => {
+    closeCard(null);
   };
-  const handleTitleBlur = (e: any): void => {
-    e.target.classList.remove("focused");
-    changeDescription();
-  };
-
-  const handleDescriptionBlur = (): void => {
-    changeDescription();
-    toggleDescriptionInput(false);
-  };
+  const clickedChild = () => {};
 
   return (
-    <div
-      className="popup__wrapper"
-      // TODO: сделать закрытие по клику мимо окна, мб отдельный компонент нужен?
-      // onClick={() => closeCard(null)}
-    >
-      <div className="popup__card">
+    <div className="popup__wrapper" onClick={clickedParent}>
+      <div
+        className="popup__card"
+        onClick={(e) => {
+          e.stopPropagation();
+          clickedChild();
+        }}
+      >
         <div className="popup__header">
           <div className="popup__title">
             <div
-              onFocus={handleTitleFocus}
+              onClick={handleFocus}
               onBlur={handleTitleBlur}
               contentEditable={true}
               suppressContentEditableWarning={true}
               onInput={(e) => changeTitle(e.currentTarget.textContent)}
-              // onInput={(e) => (card.title = e.currentTarget.textContent)}
             >
               {card.title}
             </div>
@@ -122,18 +101,16 @@ const PopupCard: React.FC<Props> = ({
                     defaultValue={card.description}
                     className="focused__description"
                     placeholder="Добавьте подробное описание здесь..."
-                    onChange={(e) => storeDescription(e.target.value)}
+                    onChange={(e) => changeDescription(e.target.value)}
                     autoFocus
                     ref={searchInput}
                     onBlur={handleDescriptionBlur}
-                    // FIXME: onFocus не робит
-                    // onFocus={handleFocus}
                     onClick={handleFocus}
                   ></input>
                   <button
                     className="popup__input_add_btn"
                     onClick={() => {
-                      changeDescription();
+                      changeDescription(card.description);
                       toggleDescriptionInput(false);
                     }}
                   >
@@ -199,6 +176,8 @@ const PopupCard: React.FC<Props> = ({
                       key={comment.id}
                       id={comment.id}
                       deleteComment={deleteComment}
+                      changeComment={changeComment}
+                      user={user}
                     />
                   );
                 })}
@@ -222,3 +201,18 @@ const PopupCard: React.FC<Props> = ({
 };
 
 export default PopupCard;
+
+type Props = {
+  card: Card;
+  comments: Array<CommentType>;
+  columnTitle: string;
+  closeCard: (arg: any) => void;
+  deleteCard: (arg: any) => void;
+  deleteAllComments: () => void;
+  changeDescription: (description: string) => void;
+  createComment: (arg: string) => void;
+  deleteComment: (arg: number) => void;
+  changeTitle: (args: any) => void;
+  changeComment: (text: string, id: number) => void;
+  user: string;
+};

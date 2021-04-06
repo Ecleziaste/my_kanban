@@ -2,6 +2,7 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import ColumnList from "./components/ColumnList";
 import PopupCard from "./components/PopupCard";
+import { v4 as uuidv4 } from "uuid";
 
 const COLUMNS = [
   { title: "TODO", id: 1 },
@@ -15,26 +16,6 @@ const LocalStorageKeys = {
   columns: "columns",
   cards: "cards",
   comments: "comments",
-};
-
-export type Card = {
-  title: string;
-  description: string;
-  author: string;
-  id: number;
-  columnId: number;
-};
-
-export type CommentType = {
-  text: string;
-  id: number;
-  cardId: number;
-  author: string;
-};
-
-export type Column = {
-  title: string;
-  id: number;
 };
 
 const setLocalStorageColumns = () => {
@@ -57,7 +38,7 @@ const App = () => {
     localStorage.setItem(LocalStorageKeys.user, JSON.stringify(userName));
   };
   askUserName();
-  // в локал закинуть
+
   const [columns, setColumns] = useState<Array<{ id: number; title: string }>>(
     JSON.parse(localStorage.getItem(LocalStorageKeys.columns) || `${COLUMNS}`)
   );
@@ -69,15 +50,12 @@ const App = () => {
   const [comments, setComments] = useState<Array<CommentType>>(
     JSON.parse(localStorage.getItem(LocalStorageKeys.comments) || "[]")
   );
-  // стейты для попапа
+
   const [card, setCard] = useState<any>(null);
   const [column, setColumn] = useState<any>(null);
 
   const changeTitle = (title: string): void => {
     card.title = title;
-
-    // const newCard = { ...card, title };
-    // setCard((prevCard: any) => ({...prevCard, title}));
     const newCards = cards.map((c) => {
       if (c.id === card.id) {
         return card;
@@ -85,6 +63,25 @@ const App = () => {
       return c;
     });
     localStorage.setItem(LocalStorageKeys.cards, JSON.stringify(newCards));
+  };
+
+  const changeComment = (text: string, id: number): void => {
+    const comment: any = comments.find(
+      (filteredComment) => filteredComment.id === id
+    );
+    comment.text = text;
+    const newComments = comments.map((c) => {
+      if (c.id === comment.id) {
+        return comment;
+      }
+      return c;
+    });
+    setComments(newComments);
+
+    localStorage.setItem(
+      LocalStorageKeys.comments,
+      JSON.stringify(newComments)
+    );
   };
 
   const changeColumnTitle = (value: string, id: number): void => {
@@ -113,8 +110,8 @@ const App = () => {
         title,
         description: "",
         author: userName,
-        id: cards.length + 1,
-        columnId: columnId,
+        id: uuidv4(),
+        columnId,
       };
       setCards([...cards, newCard]);
       localStorage.setItem(
@@ -142,7 +139,7 @@ const App = () => {
       )
     );
   };
-  // открытие закрытие попапа
+
   const openCard = (id: number) => {
     const activeCard = cards.find((card) => card.id === id);
     if (activeCard) {
@@ -156,7 +153,7 @@ const App = () => {
   const closeCard = () => {
     setCard(null);
   };
-  // закрытие попапа по эскейпу
+
   useEffect(() => {
     const handleEsc = (e: any) => {
       if (e.keyCode === 27) {
@@ -167,16 +164,15 @@ const App = () => {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  // стейт описания
-  const [description, setDescription] = useState<any>(null);
-  // сохранить описание
-  const storeDescription = (value: string): void => {
-    setDescription(value);
-  };
-  // изменить описание
-  const changeDescription = (): void => {
-    setDescription(card.description);
-    return (card.description = description);
+  const changeDescription = (description: string): void => {
+    card.description = description;
+    const newCards = cards.map((c) => {
+      if (c.id === card.id) {
+        return card;
+      }
+      return c;
+    });
+    localStorage.setItem(LocalStorageKeys.cards, JSON.stringify(newCards));
   };
 
   const createComment = (text: string): void => {
@@ -186,7 +182,7 @@ const App = () => {
       const newComment = {
         text,
         author: userName,
-        id: comments.length + 1,
+        id: uuidv4(),
         cardId: card.id,
       };
       setComments([...comments, newComment]);
@@ -228,11 +224,12 @@ const App = () => {
           deleteCard={deleteCard}
           deleteAllComments={deleteAllComments}
           closeCard={closeCard}
-          storeDescription={storeDescription}
           changeDescription={changeDescription}
           createComment={createComment}
           deleteComment={deleteComment}
           changeTitle={changeTitle}
+          changeComment={changeComment}
+          user={userName}
         />
       )}
     </div>
@@ -240,3 +237,23 @@ const App = () => {
 };
 
 export default App;
+
+export type Card = {
+  title: string;
+  description: string;
+  author: string;
+  id: any;
+  columnId: number;
+};
+
+export type CommentType = {
+  text: string;
+  id: any;
+  cardId: any;
+  author: string;
+};
+
+export type Column = {
+  title: string;
+  id: number;
+};

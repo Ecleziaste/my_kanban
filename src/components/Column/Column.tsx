@@ -5,16 +5,6 @@ import ColumnInput from "../ColumnInput";
 import Card from "../Card";
 import { CommentType } from "../../App";
 
-type Props = {
-  title: string;
-  id: number;
-  cards: Array<any>;
-  openCard: (arg: any) => void;
-  createCard: (title: string, columnId: number) => void;
-  changeColumnTitle: (title: string, id: number) => void;
-  comments: Array<CommentType>;
-};
-
 const Column: React.FC<Props> = ({
   title,
   id,
@@ -25,7 +15,7 @@ const Column: React.FC<Props> = ({
   comments,
 }) => {
   const [activeColumnInput, setActiveColumnInput] = useState(false);
-  // const divRef = useRef(null);
+
   const handleClick = (): void => {
     setActiveColumnInput(true);
   };
@@ -35,11 +25,8 @@ const Column: React.FC<Props> = ({
 
   const cardsByColumnId = cards.filter((card) => card.columnId === id);
 
-  //выделение текста зафокусенного элемента
   const handleFocus = (e: any): void => {
     e.target.classList.add("focused");
-    // FIXME: падает из-за селекта! Как иначе выделить весь текст при фокусе/клике на этот див?
-    // e.target.select();
   };
   const handleBlur = (e: any): void => {
     e.target.classList.remove("focused");
@@ -48,7 +35,6 @@ const Column: React.FC<Props> = ({
   return (
     <div className="column">
       <div
-        // onClick={selectAllText}
         onFocus={handleFocus}
         onBlur={handleBlur}
         className="column__name"
@@ -75,17 +61,12 @@ const Column: React.FC<Props> = ({
       </div>
       {activeColumnInput ? (
         <ColumnInput
-          // onClick={toggleInput}
           id={id}
           createCard={createCard}
           toggleInput={toggleInput}
         />
       ) : (
-        <button
-          className="column__button"
-          onClick={handleClick}
-          // почему здесь не работает toggleInput(true)?
-        >
+        <button className="column__button" onClick={handleClick}>
           &#43; Добавить Карточку
         </button>
       )}
@@ -94,3 +75,13 @@ const Column: React.FC<Props> = ({
 };
 
 export default Column;
+
+type Props = {
+  title: string;
+  id: number;
+  cards: Array<any>;
+  openCard: (arg: any) => void;
+  createCard: (title: string, columnId: number) => void;
+  changeColumnTitle: (title: string, id: number) => void;
+  comments: Array<CommentType>;
+};

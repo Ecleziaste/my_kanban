@@ -3,17 +3,6 @@ import "./styles.css";
 import Column from "../Column";
 import { CommentType } from "../../App";
 
-type Props = {
-  // user: string;
-  columns: Array<any>;
-  handleClick: (arg: any) => void;
-  cards: Array<any>;
-  openCard: (arg: any) => void;
-  createCard: (title: string, columnId: number) => void;
-  changeColumnTitle: (title: string, id: number) => void;
-  comments: Array<CommentType>;
-};
-
 const ColumnList: React.FC<Props> = ({
   columns,
   handleClick,
@@ -25,9 +14,6 @@ const ColumnList: React.FC<Props> = ({
 }) => {
   return (
     <div className="column__list">
-      {/* <button className="add__column" onClick={handleClick}>
-        add new column
-      </button> */}
       {columns.map((column) => {
         return (
           <Column
@@ -47,3 +33,13 @@ const ColumnList: React.FC<Props> = ({
 };
 
 export default ColumnList;
+
+type Props = {
+  columns: Array<any>;
+  handleClick: (arg: any) => void;
+  cards: Array<any>;
+  openCard: (arg: any) => void;
+  createCard: (title: string, columnId: number) => void;
+  changeColumnTitle: (title: string, id: number) => void;
+  comments: Array<CommentType>;
+};
