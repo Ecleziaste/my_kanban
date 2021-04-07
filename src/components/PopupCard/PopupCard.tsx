@@ -93,7 +93,7 @@ const PopupCard: React.FC<Props> = ({
         <div className="popup__body">
           <div className="popup__description">
             <h4>Description:</h4>
-            <div>{card.description}</div>
+            <div className="popup__description_text">{card.description}</div>
             <div>
               {activeDescriptionInput ? (
                 <div>

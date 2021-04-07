@@ -39,7 +39,7 @@ const Comment: React.FC<Props> = ({
         <div>
           <div>
             <input
-              defaultValue={changeText}
+              defaultValue={text}
               className="focused__description"
               onChange={(e) => setChangeText(e.target.value)}
               autoFocus
@@ -55,7 +55,11 @@ const Comment: React.FC<Props> = ({
             </button>
             <button
               className="popup__input_del_btn"
-              onClick={() => toggleChangeInput(false)}
+              onClick={() => {
+                toggleChangeInput(false);
+                setChangeText(text);
+                changeComment(text, id);
+              }}
             >
               &#10006;
             </button>

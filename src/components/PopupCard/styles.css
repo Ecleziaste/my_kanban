@@ -43,14 +43,19 @@
   cursor: pointer;
 }
 .popup__body {
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
   padding: 5px;
 }
 .popup__description {
-  width: 90%;
+  width: 95%;
   margin: 5px;
   cursor: pointer;
+}
+.popup__description_text {
+  word-wrap: break-word;
+  overflow: clip;
 }
 .popup__description_input {
   width: 100%;
@@ -65,12 +70,6 @@
 .focused__description {
   width: 100%;
   height: 70px;
-
-  /* display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
-  align-items: flex-start; */
-
   /* text-align: top; */
   border-radius: 4px;
   margin-top: 5px;
@@ -79,10 +78,6 @@
   background: white;
   cursor: text;
 }
-/* input :focus {
-  box-shadow: 0 0 5px 1px #036788;
-  background: #fffac0;
-} */
 hr {
   margin: 15px 0;
 }
@@ -120,11 +115,14 @@ hr {
   cursor: pointer;
 }
 .comments__wrapper {
-  height: 40%;
+  width: 100%;
+  /* height: 40%; */
   display: flex;
   flex-flow: column nowrap;
 }
 .comments__container {
   display: flex;
   flex-flow: column-reverse nowrap;
+  width: 100%;
+  /* word-wrap: break-word; */
 }

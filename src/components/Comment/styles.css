@@ -1,7 +1,7 @@
 .comment__wrapper {
   display: flex;
   flex-flow: column nowrap;
-  width: 80%;
+  width: 100%;
   margin: 5px;
   padding: 5px;
   border-radius: 5px;
@@ -9,6 +9,8 @@
 .comment__content_wrapper {
   display: flex;
   flex-flow: column nowrap;
+  width: 80%;
+  /* height: fit-content; */
 }
 .comment__input {
 }
@@ -17,9 +19,9 @@
 }
 .comment__text {
   word-wrap: break-word;
-  overflow: hidden;
   border: 2px solid rgb(104, 48, 104);
   padding: 2px;
+  width: 100%;
 }
 .comment__add_btn {
   display: flex;
