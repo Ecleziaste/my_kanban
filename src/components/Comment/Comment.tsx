@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./styles.css";
+import styled from "styled-components";
 
 const Comment: React.FC<Props> = ({
   author,
@@ -34,27 +34,24 @@ const Comment: React.FC<Props> = ({
   };
 
   return (
-    <div className="comment__wrapper">
+    <CommentContainer>
       {changeBtnClicked ? (
-        <div>
+        <>
+          <FocusedInput
+            defaultValue={text}
+            onChange={(e) => setChangeText(e.target.value)}
+            autoFocus
+          ></FocusedInput>
           <div>
-            <input
-              defaultValue={text}
-              className="focused__description"
-              onChange={(e) => setChangeText(e.target.value)}
-              autoFocus
-            ></input>
-            <button
-              className="popup__input_add_btn"
+            <Btn
               onClick={() => {
                 toggleChangeInput(false);
                 changeComment(changeText, id);
               }}
             >
               Сохранить
-            </button>
-            <button
-              className="popup__input_del_btn"
+            </Btn>
+            <Btn
               onClick={() => {
                 toggleChangeInput(false);
                 setChangeText(text);
@@ -62,31 +59,75 @@ const Comment: React.FC<Props> = ({
               }}
             >
               &#10006;
-            </button>
+            </Btn>
           </div>
-        </div>
+        </>
       ) : (
-        <div>
-          <div className="comment__content_wrapper">
-            <div className="comment__author">{author} said:&nbsp;&nbsp;</div>
-            <div className="comment__text">{changeText}</div>
-            <div className="comment__buttons_wrapper">
-              <button
-                className="comment__change_btn"
-                onClick={handleChangeClick}
-              >
-                Change
-              </button>
-              <button className="comment__del_btn" onClick={handleDeleteClick}>
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
+        <CommentContentWrapper>
+          <Author>{author} said:&nbsp;&nbsp;</Author>
+          <Text>{changeText}</Text>
+          <BtnsWrapper>
+            <AddBtn onClick={handleChangeClick}>Change</AddBtn>
+            <DelBtn onClick={handleDeleteClick}>Delete</DelBtn>
+          </BtnsWrapper>
+        </CommentContentWrapper>
       )}
-    </div>
+    </CommentContainer>
   );
 };
+
+const FocusedInput = styled.input`
+  width: 100%;
+  height: 70px;
+  border-radius: 4px;
+  margin-top: 5px;
+  padding: 10px;
+  box-shadow: 0 0 5px 1px #036788;
+  background: white;
+  cursor: text;
+`;
+const Btn = styled.button`
+  margin: 5px;
+  cursor: pointer;
+`;
+const CommentContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+`;
+const CommentContentWrapper = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  width: 80%; ;
+`;
+const Author = styled.div`
+  padding: 5px;
+`;
+const Text = styled.div`
+  word-wrap: break-word;
+  border: 2px solid rgb(104, 48, 104);
+  padding: 2px;
+  width: 100%;
+`;
+const BtnsWrapper = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  margin: 5px 0;
+`;
+const AddBtn = styled.button`
+  display: flex;
+  align-self: flex-start;
+  cursor: pointer;
+  margin-left: 5px;
+`;
+const DelBtn = styled.button`
+  cursor: pointer;
+  margin-left: 5px;
+`;
 
 export default Comment;
 

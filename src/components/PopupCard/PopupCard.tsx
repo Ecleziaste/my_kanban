@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
-import "./styles.css";
 import Comment from "../Comment";
 import { Card } from "../../App";
 import { CommentType } from "../../App";
+import styled from "styled-components";
 
 const PopupCard: React.FC<Props> = ({
   card,
@@ -50,6 +50,8 @@ const PopupCard: React.FC<Props> = ({
   };
 
   const [text, setText] = useState("");
+  // const unchangedDesc = card.description;
+  const [changeDesc, setChangeDesc] = useState(card.description);
 
   const commentsByCardId = comments.filter(
     (comment) => comment.cardId === card.id
@@ -61,16 +63,15 @@ const PopupCard: React.FC<Props> = ({
   const clickedChild = () => {};
 
   return (
-    <div className="popup__wrapper" onClick={clickedParent}>
-      <div
-        className="popup__card"
+    <Wrapper onClick={clickedParent}>
+      <Popup
         onClick={(e) => {
           e.stopPropagation();
           clickedChild();
         }}
       >
-        <div className="popup__header">
-          <div className="popup__title">
+        <Header>
+          <Title>
             <div
               onClick={handleFocus}
               onBlur={handleTitleBlur}
@@ -82,63 +83,61 @@ const PopupCard: React.FC<Props> = ({
             </div>
             <div>By {card.author}</div>
             <div> From column '{columnTitle}'</div>
-          </div>
-          <button
-            className="popup__close_card_btn"
-            onClick={() => closeCard(null)}
-          >
-            X
-          </button>
-        </div>
-        <div className="popup__body">
-          <div className="popup__description">
+          </Title>
+          <CloseCard onClick={() => closeCard(null)}>X</CloseCard>
+        </Header>
+        <Body>
+          <Description>
             <h4>Description:</h4>
-            <div className="popup__description_text">{card.description}</div>
+            <DescriptionText>{card.description}</DescriptionText>
             <div>
               {activeDescriptionInput ? (
                 <div>
-                  <input
+                  <FocusedDescInput
                     defaultValue={card.description}
-                    className="focused__description"
                     placeholder="Добавьте подробное описание здесь..."
-                    onChange={(e) => changeDescription(e.target.value)}
+                    onChange={(e) => {
+                      changeDescription(e.target.value);
+                      // setChangeDesc(e.target.value);
+                    }}
                     autoFocus
                     ref={searchInput}
                     onBlur={handleDescriptionBlur}
                     onClick={handleFocus}
-                  ></input>
-                  <button
-                    className="popup__input_add_btn"
+                  ></FocusedDescInput>
+                  <PopupDescriptionAddBtn
                     onClick={() => {
-                      changeDescription(card.description);
                       toggleDescriptionInput(false);
+                      changeDescription(changeDesc);
                     }}
                   >
                     Сохранить
-                  </button>
-                  <button
-                    className="popup__input_del_btn"
-                    onClick={() => toggleDescriptionInput(false)}
+                  </PopupDescriptionAddBtn>
+                  {/* FIXME: почему не робят кнопки, если юзаем локальный стейт??? */}
+                  <PopupDescriptionCancelBtn
+                    onClick={() => {
+                      toggleDescriptionInput(false);
+                      // setChangeDesc(card.description);
+                      changeDescription("");
+                    }}
                   >
                     &#10006;
-                  </button>
+                  </PopupDescriptionCancelBtn>
                 </div>
               ) : (
-                <input
+                <DescInput
                   onClick={handleDescriptionClick}
-                  className="popup__description_input"
                   placeholder="Добавьте подробное описание здесь..."
-                ></input>
+                ></DescInput>
               )}
             </div>
-          </div>
-          <hr></hr>
-          <div className="comments__wrapper">
+          </Description>
+          <Hr></Hr>
+          <CommentsWrapper>
             {activeCommentInput ? (
-              <div className="popup__comment_input">
-                <input
+              <PopupCommentInput>
+                <CommentsInput
                   autoFocus
-                  className="comments__input focused"
                   placeholder="Напишите комментарий..."
                   onChange={(e) => setText(e.target.value)}
                   onBlur={() => {
@@ -146,9 +145,8 @@ const PopupCard: React.FC<Props> = ({
                     setText("");
                     toggleCommentInput(false);
                   }}
-                ></input>
-                <button
-                  className="comments__add_btn"
+                ></CommentsInput>
+                <CommentsAddBtn
                   onClick={() => {
                     createComment(text);
                     setText("");
@@ -156,17 +154,15 @@ const PopupCard: React.FC<Props> = ({
                   }}
                 >
                   Добавить
-                </button>
-              </div>
+                </CommentsAddBtn>
+              </PopupCommentInput>
             ) : (
-              <input
+              <InactivePopupCommentInput
                 onClick={handleClick}
-                className="popup__comment_input"
                 placeholder="Напишите комментарий..."
-              ></input>
+              ></InactivePopupCommentInput>
             )}
-            <div className="comments__container">
-              {" "}
+            <CommentsContainer>
               {commentsByCardId &&
                 commentsByCardId.map((comment) => {
                   return (
@@ -181,12 +177,11 @@ const PopupCard: React.FC<Props> = ({
                     />
                   );
                 })}
-            </div>
-          </div>
-        </div>
+            </CommentsContainer>
+          </CommentsWrapper>
+        </Body>
 
-        <button
-          className="popup__card_del_btn"
+        <DelCardBtn
           onClick={() => {
             deleteCard(card.id);
             deleteAllComments();
@@ -194,11 +189,152 @@ const PopupCard: React.FC<Props> = ({
           }}
         >
           delete dis card
-        </button>
-      </div>
-    </div>
+        </DelCardBtn>
+      </Popup>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
+  overflow: scroll;
+  z-index: 500;
+`;
+const Popup = styled.div`
+  background-color: rgba(131, 120, 120, 0.95);
+  display: flex;
+  flex-flow: column wrap;
+  width: 500px;
+  margin: 5% auto;
+  padding: 10px;
+  z-index: 501;
+  border: 3px solid black;
+  border-radius: 10px;
+`;
+const Header = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin: 5px;
+`;
+const Title = styled.div`
+  align-self: center;
+  margin: 5px;
+`;
+const CloseCard = styled.button`
+  display: block;
+  width: 35px;
+  height: 35px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+const Body = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 5px;
+`;
+const Description = styled.div`
+  width: 95%;
+  margin: 5px;
+  cursor: pointer;
+`;
+
+const DescriptionText = styled.div`
+  word-wrap: break-word;
+  overflow: clip;
+`;
+const FocusedDescInput = styled.input`
+  width: 100%;
+  height: 70px;
+  border-radius: 4px;
+  margin-top: 5px;
+  padding: 10px;
+  box-shadow: 0 0 5px 1px #036788;
+  background: white;
+  cursor: text;
+`;
+const DescInput = styled.input`
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  flex-flow: column nowrap;
+  border-radius: 4px;
+  margin-top: 5px;
+  padding: 10px;
+`;
+const CommentsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+`;
+const Hr = styled.hr`
+  margin: 15px 0;
+`;
+const PopupCommentInput = styled.div`
+  width: 80%;
+  cursor: pointer;
+  display: flex;
+  flex-flow: column nowrap;
+  border-radius: 4px;
+  margin: 5px;
+  padding: 10px;
+`;
+// FIXME: передать сюда пропсом содержимое объекта PopupCommentInput
+const InactivePopupCommentInput = styled.input`
+  width: 80%;
+  cursor: pointer;
+  display: flex;
+  flex-flow: column nowrap;
+  border-radius: 4px;
+  margin: 5px;
+  padding: 10px;
+`;
+const CommentsAddBtn = styled.button`
+  width: 20%;
+  margin: 15px 0 20px -10px;
+  background-color: rgb(163, 236, 89);
+  border-radius: 5px;
+`;
+const PopupDescriptionCancelBtn = styled.button`
+  cursor: pointer;
+  margin: 5px;
+`;
+const PopupDescriptionAddBtn = styled.button`
+  cursor: pointer;
+  margin: 5px;
+`;
+const CommentsInput = styled.input`
+  padding: 10px;
+  border-radius: 5px;
+  margin: -10px;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 5px 1px #036788;
+    background: white;
+  }
+`;
+
+const DelCardBtn = styled.button`
+  display: flex;
+  align-self: flex-end;
+  border-radius: 4px;
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+`;
+const CommentsContainer = styled.div`
+  display: flex;
+  flex-flow: column-reverse nowrap;
+  width: 100%;
+`;
 
 export default PopupCard;
 

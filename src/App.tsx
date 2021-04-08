@@ -1,8 +1,8 @@
-import "./App.css";
 import React, { useState, useEffect } from "react";
 import ColumnList from "./components/ColumnList";
 import PopupCard from "./components/PopupCard";
 import { v4 as uuidv4 } from "uuid";
+import styled from "styled-components";
 
 const COLUMNS = [
   { title: "TODO", id: 1 },
@@ -206,7 +206,7 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <Container>
       <ColumnList
         columns={columns}
         handleClick={handleClick}
@@ -232,9 +232,13 @@ const App = () => {
           user={userName}
         />
       )}
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  background-color: rgb(196, 190, 190);
+`;
 
 export default App;
 

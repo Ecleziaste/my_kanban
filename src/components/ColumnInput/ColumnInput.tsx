@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./styles.css";
+import styled from "styled-components";
 
 const ColumnInput: React.FC<Props> = ({ createCard, toggleInput, id }) => {
   const closeInput = () => {
@@ -8,15 +8,14 @@ const ColumnInput: React.FC<Props> = ({ createCard, toggleInput, id }) => {
   const [title, setTitle] = useState("");
 
   return (
-    <div className="card__input">
-      <input
+    <Container>
+      <Input
         autoFocus
-        className="input__itself focused"
         placeholder="&nbsp;Введите заголовок для карточки"
         onChange={(e) => setTitle(e.target.value)}
-      ></input>
-      <div className="input__buttons_wrapper">
-        <button
+      ></Input>
+      <BtnsWrapper>
+        <AddBtn
           className="input__add_btn"
           onClick={() => {
             createCard(title, id);
@@ -24,14 +23,47 @@ const ColumnInput: React.FC<Props> = ({ createCard, toggleInput, id }) => {
           }}
         >
           Добавить
-        </button>
-        <button className="input__del_btn" onClick={closeInput}>
+        </AddBtn>
+        <CancelBtn className="input__del_btn" onClick={closeInput}>
           &#10006;
-        </button>
-      </div>
-    </div>
+        </CancelBtn>
+      </BtnsWrapper>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  width: 96%;
+  margin: 5px auto;
+  padding: 0;
+`;
+
+const BtnsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const Input = styled.input`
+  width: 100%;
+  height: 50%;
+  align-self: center;
+  border: none;
+  border-radius: 4px;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 5px 1px #036788;
+    background: white;
+  }
+`;
+const AddBtn = styled.button`
+  margin-top: 5px;
+  height: 25px;
+  padding: 4px;
+`;
+
+const CancelBtn = styled.button`
+  margin-top: 5px;
+  width: 25px;
+`;
 
 export default ColumnInput;
 

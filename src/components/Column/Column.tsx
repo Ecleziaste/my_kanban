@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 
 import "./styles.css";
 import ColumnInput from "../ColumnInput";
@@ -33,11 +34,11 @@ const Column: React.FC<Props> = ({
   };
 
   return (
-    <div className="column">
-      <div
+    <Container>
+      <Title
+        // Focused={Focused}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className="column__name"
         contentEditable={true}
         suppressContentEditableWarning={true}
         onInput={(e) =>
@@ -46,8 +47,8 @@ const Column: React.FC<Props> = ({
         defaultValue={title}
       >
         {title}
-      </div>
-      <div className="card__list">
+      </Title>
+      <Cardlist>
         {cardsByColumnId.map((card) => {
           return (
             <Card
@@ -58,7 +59,7 @@ const Column: React.FC<Props> = ({
             />
           );
         })}
-      </div>
+      </Cardlist>
       {activeColumnInput ? (
         <ColumnInput
           id={id}
@@ -66,14 +67,60 @@ const Column: React.FC<Props> = ({
           toggleInput={toggleInput}
         />
       ) : (
-        <button className="column__button" onClick={handleClick}>
-          &#43; Добавить Карточку
-        </button>
+        <AddCardBtn onClick={handleClick}>&#43; Добавить Карточку</AddCardBtn>
       )}
-    </div>
+    </Container>
   );
 };
 
+const Container = styled.div`
+  background-color: rgba(245, 239, 239, 0.932);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  margin: 10px;
+  padding: 10px;
+  border: 3px solid rgb(5, 92, 92);
+  border-radius: 10px;
+  width: 20%;
+`;
+const Title = styled.div`
+  font-size: 20px;
+  font-weight: 500;
+  margin: 5px;
+  padding: 5px;
+  /* box-shadow: 0 0 5px 1px #036788;
+  background: white; */
+  cursor: pointer;
+`;
+
+const Focused = styled.input`
+  box-shadow: 0 0 5px 1px #036788;
+  background: white;
+  cursor: text;
+`;
+
+const Cardlist = styled.div`
+  width: 96%;
+  margin: 5px;
+  padding: 0;
+`;
+const AddCardBtn = styled.button`
+  margin: 5px;
+  height: 25px;
+  width: 96%;
+  background-color: rgb(122, 122, 247);
+  text-align: left;
+`;
+// const Input = styled.input`
+//   font-size: 20px;
+//   font-weight: 400;
+//   &:focus {
+//     box-shadow: 0 0 5px 1px #036788;
+//     background: white;
+//     cursor: text;
+//   }
+// `;
 export default Column;
 
 type Props = {
