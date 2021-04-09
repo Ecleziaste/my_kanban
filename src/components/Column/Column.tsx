@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
-import "./styles.css";
 import ColumnInput from "../ColumnInput";
 import Card from "../Card";
 import { CommentType } from "../../App";
@@ -36,7 +34,6 @@ const Column: React.FC<Props> = ({
   return (
     <Container>
       <Title
-        // Focused={Focused}
         onFocus={handleFocus}
         onBlur={handleBlur}
         contentEditable={true}
@@ -89,9 +86,12 @@ const Title = styled.div`
   font-weight: 500;
   margin: 5px;
   padding: 5px;
-  /* box-shadow: 0 0 5px 1px #036788;
-  background: white; */
   cursor: pointer;
+  &:focus {
+    box-shadow: 0 0 5px 1px #036788;
+    background: white;
+    cursor: text;
+  }
 `;
 
 const Focused = styled.input`
@@ -112,15 +112,7 @@ const AddCardBtn = styled.button`
   background-color: rgb(122, 122, 247);
   text-align: left;
 `;
-// const Input = styled.input`
-//   font-size: 20px;
-//   font-weight: 400;
-//   &:focus {
-//     box-shadow: 0 0 5px 1px #036788;
-//     background: white;
-//     cursor: text;
-//   }
-// `;
+
 export default Column;
 
 type Props = {

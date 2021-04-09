@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Comment from "../Comment";
 import { Card } from "../../App";
 import { CommentType } from "../../App";
@@ -18,40 +18,22 @@ const PopupCard: React.FC<Props> = ({
   changeComment,
   user,
 }) => {
-  const searchInput = useRef<any>(null);
+  const [text, setText] = useState("");
 
-  function handleFocus() {
-    if (searchInput.current !== null) {
-      searchInput.current.select();
-    }
-  }
+  const [changeDesc, setChangeDesc] = useState(card.description);
+  const handleChangeDesc = (value: string) => {
+    setChangeDesc(value);
+  };
 
   const [activeDescriptionInput, setActiveDescriptionInput] = useState(false);
-  const handleDescriptionClick = (): void => {
-    setActiveDescriptionInput(true);
-  };
   const toggleDescriptionInput = (value: boolean): void => {
     setActiveDescriptionInput(value);
   };
 
   const [activeCommentInput, setActiveCommentInput] = useState(false);
-  const handleClick = (): void => {
-    setActiveCommentInput(true);
-  };
   const toggleCommentInput = (value: boolean): void => {
     setActiveCommentInput(value);
   };
-
-  const handleTitleBlur = (e: any): void => {
-    e.target.classList.remove("focused");
-  };
-  const handleDescriptionBlur = (): void => {
-    toggleDescriptionInput(false);
-  };
-
-  const [text, setText] = useState("");
-  // const unchangedDesc = card.description;
-  const [changeDesc, setChangeDesc] = useState(card.description);
 
   const commentsByCardId = comments.filter(
     (comment) => comment.cardId === card.id
@@ -60,21 +42,17 @@ const PopupCard: React.FC<Props> = ({
   const clickedParent = () => {
     closeCard(null);
   };
-  const clickedChild = () => {};
 
   return (
     <Wrapper onClick={clickedParent}>
       <Popup
         onClick={(e) => {
           e.stopPropagation();
-          clickedChild();
         }}
       >
         <Header>
           <Title>
             <div
-              onClick={handleFocus}
-              onBlur={handleTitleBlur}
               contentEditable={true}
               suppressContentEditableWarning={true}
               onInput={(e) => changeTitle(e.currentTarget.textContent)}
@@ -97,13 +75,9 @@ const PopupCard: React.FC<Props> = ({
                     defaultValue={card.description}
                     placeholder="Добавьте подробное описание здесь..."
                     onChange={(e) => {
-                      changeDescription(e.target.value);
-                      // setChangeDesc(e.target.value);
+                      handleChangeDesc(e.target.value);
                     }}
                     autoFocus
-                    ref={searchInput}
-                    onBlur={handleDescriptionBlur}
-                    onClick={handleFocus}
                   ></FocusedDescInput>
                   <PopupDescriptionAddBtn
                     onClick={() => {
@@ -113,12 +87,10 @@ const PopupCard: React.FC<Props> = ({
                   >
                     Сохранить
                   </PopupDescriptionAddBtn>
-                  {/* FIXME: почему не робят кнопки, если юзаем локальный стейт??? */}
                   <PopupDescriptionCancelBtn
                     onClick={() => {
                       toggleDescriptionInput(false);
-                      // setChangeDesc(card.description);
-                      changeDescription("");
+                      changeDescription(card.description);
                     }}
                   >
                     &#10006;
@@ -126,7 +98,7 @@ const PopupCard: React.FC<Props> = ({
                 </div>
               ) : (
                 <DescInput
-                  onClick={handleDescriptionClick}
+                  onClick={() => toggleDescriptionInput(true)}
                   placeholder="Добавьте подробное описание здесь..."
                 ></DescInput>
               )}
@@ -158,7 +130,7 @@ const PopupCard: React.FC<Props> = ({
               </PopupCommentInput>
             ) : (
               <InactivePopupCommentInput
-                onClick={handleClick}
+                onClick={() => toggleCommentInput(true)}
                 placeholder="Напишите комментарий..."
               ></InactivePopupCommentInput>
             )}
@@ -185,7 +157,6 @@ const PopupCard: React.FC<Props> = ({
           onClick={() => {
             deleteCard(card.id);
             deleteAllComments();
-            console.log(comments);
           }}
         >
           delete dis card
@@ -280,7 +251,7 @@ const Hr = styled.hr`
 `;
 const PopupCommentInput = styled.div`
   width: 80%;
-  cursor: pointer;
+  cursor: text;
   display: flex;
   flex-flow: column nowrap;
   border-radius: 4px;
