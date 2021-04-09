@@ -24,18 +24,9 @@ const Column: React.FC<Props> = ({
 
   const cardsByColumnId = cards.filter((card) => card.columnId === id);
 
-  const handleFocus = (e: any): void => {
-    e.target.classList.add("focused");
-  };
-  const handleBlur = (e: any): void => {
-    e.target.classList.remove("focused");
-  };
-
   return (
     <Container>
       <Title
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         contentEditable={true}
         suppressContentEditableWarning={true}
         onInput={(e) =>
@@ -88,18 +79,13 @@ const Title = styled.div`
   padding: 5px;
   cursor: pointer;
   &:focus {
+    outline: none;
+    border-radius: 4px;
     box-shadow: 0 0 5px 1px #036788;
     background: white;
     cursor: text;
   }
 `;
-
-const Focused = styled.input`
-  box-shadow: 0 0 5px 1px #036788;
-  background: white;
-  cursor: text;
-`;
-
 const Cardlist = styled.div`
   width: 96%;
   margin: 5px;
